@@ -1,0 +1,69 @@
+[gd_scene load_steps=8 format=3 uid="uid://cj1kjbgv4bjsi"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_midof"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_k00j3"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lfj0r"]
+albedo_color = Color(0.196078, 0.196078, 0.196078, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_ex762"]
+material = SubResource("StandardMaterial3D_lfj0r")
+
+[sub_resource type="BoxMesh" id="BoxMesh_hwga2"]
+
+[sub_resource type="Animation" id="Animation_lbo3q"]
+resource_name = "Walk"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qcbe1"]
+_data = {
+"Walk": SubResource("Animation_lbo3q")
+}
+
+[node name="Player" type="CharacterBody3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.4, 0, 1, 0)
+visible = false
+shape = SubResource("CapsuleShape3D_midof")
+
+[node name="Head" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, 1.7, 0)
+mesh = SubResource("SphereMesh_k00j3")
+
+[node name="LeftEye" type="MeshInstance3D" parent="Head"]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, -0.2, 0, -0.4)
+mesh = SubResource("SphereMesh_ex762")
+
+[node name="RightEye" type="MeshInstance3D" parent="Head"]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0.2, 0, -0.4)
+mesh = SubResource("SphereMesh_ex762")
+
+[node name="Body" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.4, 0, 0, 0, 0.7, 0, 0, 0, 0.2, 0, 1.07, 0)
+mesh = SubResource("BoxMesh_hwga2")
+
+[node name="LeftArm" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.1, 0, 0, 0, 0.5, 0, 0, 0, 0.1, -0.3, 1.1, 0)
+mesh = SubResource("BoxMesh_hwga2")
+skeleton = NodePath("../Body")
+
+[node name="RightArm" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.1, 0, 0, 0, 0.5, 0, 0, 0, 0.1, 0.3, 1.1, 0)
+mesh = SubResource("BoxMesh_hwga2")
+skeleton = NodePath("../Body")
+
+[node name="LeftLeg" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.12, 0, 0, 0, 0.6, 0, 0, 0, 0.12, -0.1, 0.3, 0)
+mesh = SubResource("BoxMesh_hwga2")
+skeleton = NodePath("../Body")
+
+[node name="RightLeg" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.12, 0, 0, 0, 0.6, 0, 0, 0, 0.12, 0.1, 0.3, 0)
+mesh = SubResource("BoxMesh_hwga2")
+skeleton = NodePath("../Body")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_qcbe1")
+}

@@ -1,0 +1,54 @@
+[gd_scene load_steps=5 format=3 uid="uid://bpnawg7su2kht"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_18q3l"]
+albedo_color = Color(0.466667, 0.466667, 0.466667, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_uj6sb"]
+material = SubResource("StandardMaterial3D_18q3l")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pmxs8"]
+albedo_color = Color(0.466667, 0.466667, 0.466667, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_24f1h"]
+material = SubResource("StandardMaterial3D_pmxs8")
+
+[node name="GameTile" type="Node3D"]
+
+[node name="TileBlock" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.1, 0, 0, 0, 1, 0, 0.05, 0)
+mesh = SubResource("BoxMesh_uj6sb")
+
+[node name="Owner" type="Label3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 2.5, -0.5)
+text = "Player 1"
+
+[node name="Title" type="Label3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 2, -0.5)
+text = "Area Name"
+
+[node name="Description" type="Label3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 1.5, -0.5)
+text = "Buy：$1000
+Upgrade：$2000
+Price：
+- $100 
+- $1000
+- $5000
+- $10000"
+font_size = 12
+
+[node name="Level" type="Node3D" parent="."]
+
+[node name="Level1" type="MeshInstance3D" parent="Level"]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0.3, 0.3)
+mesh = SubResource("BoxMesh_24f1h")
+
+[node name="Level2" type="MeshInstance3D" parent="Level"]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0.7, 0.3)
+mesh = SubResource("BoxMesh_24f1h")
+skeleton = NodePath("../Level1")
+
+[node name="Level3" type="MeshInstance3D" parent="Level"]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 1.1, 0.3)
+mesh = SubResource("BoxMesh_24f1h")
+skeleton = NodePath("../Level1")
