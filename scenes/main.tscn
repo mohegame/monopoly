@@ -1,9 +1,7 @@
-[gd_scene load_steps=13 format=3 uid="uid://d3im1btdmnq85"]
+[gd_scene load_steps=11 format=3 uid="uid://lw6klon16rpj"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_2abh6"]
 [ext_resource type="Script" path="res://scripts/ui/joystick.gd" id="2_jjqbt"]
-[ext_resource type="PackedScene" uid="uid://d2oxfd4x3etkm" path="res://scenes/prefabs/random.tscn" id="2_xuhpn"]
-[ext_resource type="PackedScene" uid="uid://bpnawg7su2kht" path="res://scenes/prefabs/tile.tscn" id="3_pq725"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_r5ngt"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -52,7 +50,7 @@ transform = Transform3D(40, 0, 0, 0, 1, 0, 0, 0, 40, 0, -0.5, 0)
 shape = SubResource("BoxShape3D_ekk1y")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Floor"]
-transform = Transform3D(20, 0, 0, 0, 20, 7.10543e-14, 0, -7.10543e-14, 20, 0, 0, 0)
+transform = Transform3D(20, 0, 0, 0, 20, 7.10543e-14, 0, -7.10543e-14, 20, -0.0346965, 0.135498, -0.0636702)
 mesh = SubResource("PlaneMesh_otcuc")
 skeleton = NodePath("../CollisionShape3D")
 
@@ -98,18 +96,16 @@ mesh = SubResource("BoxMesh_gm300")
 _spawnable_scenes = PackedStringArray("res://scenes/prefabs/pawn.tscn", "res://scenes/prefabs/random.tscn", "res://scenes/prefabs/tile.tscn")
 spawn_path = NodePath("..")
 
-[node name="Random" parent="GameObjects" instance=ExtResource("2_xuhpn")]
-
-[node name="GameTile" parent="GameObjects" instance=ExtResource("3_pq725")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -2.74524, 0, 0)
-
-[node name="GameTile2" parent="GameObjects" instance=ExtResource("3_pq725")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 2.28684, 0, 0)
-
 [node name="Players" type="Node3D" parent="."]
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="Players"]
 _spawnable_scenes = PackedStringArray("res://scenes/prefabs/player.tscn")
+spawn_path = NodePath("..")
+
+[node name="PlayerControllers" type="Node3D" parent="."]
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="PlayerControllers"]
+_spawnable_scenes = PackedStringArray("res://scenes/prefabs/player_controller.tscn")
 spawn_path = NodePath("..")
 
 [node name="StartPositions" type="Node3D" parent="."]
@@ -133,10 +129,10 @@ layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 50.0
-offset_top = -150.0
-offset_right = 150.0
-offset_bottom = -50.0
+offset_left = 200.0
+offset_top = -300.0
+offset_right = 300.0
+offset_bottom = -200.0
 grow_vertical = 0
 pivot_offset = Vector2(50, 50)
 script = ExtResource("2_jjqbt")
@@ -153,10 +149,10 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -150.0
-offset_top = -150.0
-offset_right = -50.0
-offset_bottom = -50.0
+offset_left = -300.0
+offset_top = -300.0
+offset_right = -200.0
+offset_bottom = -200.0
 grow_horizontal = 0
 grow_vertical = 0
 pivot_offset = Vector2(50, 50)

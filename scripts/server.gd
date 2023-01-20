@@ -3,6 +3,7 @@ extends Node
 var move_speed: float = 10
 var camera: Node3D
 var players: Node3D
+var player_controllers: Node3D
 var game_objects: Node3D 
 var game: Node3D
 
@@ -14,6 +15,7 @@ func _ready() -> void:
 	self.camera.rotation = Vector3(-PI/4, PI/2, 0)
 	self.camera.position = Vector3(20, 10, 0)
 	self.players = self.get_node("../Players")
+	self.player_controllers = self.get_node("../PlayerControllers")
 	self.game_objects = self.get_node("../GameObjects")
 
 	var peer = ENetMultiplayerPeer.new()
@@ -48,17 +50,19 @@ func _process(delta: float) -> void:
 func add_player(id: int):
 	print("Client ", id, " connected")
 	self.player_count += 1
-	var positions = self.get_node("../StartPositions")
-	var start_transform = positions.get_node("StartPosition" + str(self.player_count % positions.get_child_count())).transform
 
 	var player = preload("res://scenes/prefabs/player.tscn").instantiate()
 	player.name = str(id)
-	player.transform = start_transform
 	self.players.add_child(player)
+
+	var player_controller = preload("res://scenes/prefabs/player_controller.tscn").instantiate()
+	player_controller.name = str(id)
+	player_controller.player_index = self.player_count
+	player_controller.owner_id = id
+	self.player_controllers.add_child(player_controller)
 
 	var pawn = preload("res://scenes/prefabs/pawn.tscn").instantiate()
 	pawn.name = "pawn-" + str(id)
-	pawn.transform = start_transform
 	self.game_objects.add_child(pawn)
 
 

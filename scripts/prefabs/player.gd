@@ -6,14 +6,26 @@ const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
 
 @export
+var initialized: bool = false
+
+@export
 var state: String = ""
+
 var forward_yaw_angle: float = 0
 var player_id: int
 var attached_object: Node3D
 var animation_player: AnimationPlayer
 
+
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
+
+func _init():
+	self.visible = false
+
+func initialize() -> void:
+	self.initialized = true
+	return
 
 func _enter_tree() -> void:
 	self.animation_player = self.get_node("Character/AnimationPlayer")
@@ -22,9 +34,15 @@ func _enter_tree() -> void:
 	self.state = "Idle2"
 
 func _physics_process(delta: float) -> void:
+	if !self.initialized:
+		return
+
+	if !self.visible:
+		self.visible = true
+
 	if self.multiplayer.get_unique_id() != self.player_id:
 		return
-	
+
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y -= gravity * delta
@@ -59,12 +77,17 @@ func _physics_process(delta: float) -> void:
 	return
 
 func _process(_delta: float) -> void:
+	if !self.initialized:
+		return
+
+	if !self.visible:
+		self.visible = true
+
 	if self.attached_object != null:
 		self.attached_object.position = self.position + Vector3(0,2.5,0)
 
 	if self.animation_player.current_animation != self.state:
 		self.animation_player.current_animation = self.state
-		#self.animation_player.current_animation_position = 0;
 
 	if self.multiplayer.get_unique_id() != self.player_id:
 		return

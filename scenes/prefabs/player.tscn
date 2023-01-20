@@ -3,9 +3,9 @@
 [ext_resource type="Script" path="res://scripts/prefabs/player.gd" id="1_0ipyv"]
 [ext_resource type="PackedScene" uid="uid://dm6o55jfrmxfv" path="res://assets/character.glb" id="2_w4u4e"]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_nrndr"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_tugsp"]
 
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_q20im"]
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_se8oc"]
 properties/0/path = NodePath("..:position")
 properties/0/spawn = true
 properties/0/sync = true
@@ -15,13 +15,16 @@ properties/1/sync = true
 properties/2/path = NodePath("..:state")
 properties/2/spawn = true
 properties/2/sync = true
+properties/3/path = NodePath("..:initialized")
+properties/3/spawn = true
+properties/3/sync = true
 
 [node name="Player" type="CharacterBody3D"]
 script = ExtResource("1_0ipyv")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.09802, 0, 1, 0)
-shape = SubResource("CapsuleShape3D_nrndr")
+shape = SubResource("CapsuleShape3D_tugsp")
 
 [node name="Label3D" type="Label3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
@@ -33,4 +36,4 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 root_path = NodePath(".")
-replication_config = SubResource("SceneReplicationConfig_q20im")
+replication_config = SubResource("SceneReplicationConfig_se8oc")
