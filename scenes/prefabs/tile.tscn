@@ -1,54 +1,68 @@
-[gd_scene load_steps=5 format=3 uid="uid://bpnawg7su2kht"]
+[gd_scene load_steps=7 format=3 uid="uid://bpnawg7su2kht"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_18q3l"]
+[ext_resource type="Script" path="res://scripts/prefabs/tile.gd" id="1_j6n10"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_65vkt"]
 albedo_color = Color(0.466667, 0.466667, 0.466667, 1)
 
-[sub_resource type="BoxMesh" id="BoxMesh_uj6sb"]
-material = SubResource("StandardMaterial3D_18q3l")
+[sub_resource type="BoxMesh" id="BoxMesh_duj3j"]
+material = SubResource("StandardMaterial3D_65vkt")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pmxs8"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6tiw0"]
 albedo_color = Color(0.466667, 0.466667, 0.466667, 1)
 
-[sub_resource type="BoxMesh" id="BoxMesh_24f1h"]
-material = SubResource("StandardMaterial3D_pmxs8")
+[sub_resource type="BoxMesh" id="BoxMesh_u6n0w"]
+material = SubResource("StandardMaterial3D_6tiw0")
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_ye542"]
+properties/0/path = NodePath("..:position")
+properties/0/spawn = true
+properties/0/sync = true
+properties/1/path = NodePath("..:rotation")
+properties/1/spawn = true
+properties/1/sync = true
+properties/2/path = NodePath("..:owner_name")
+properties/2/spawn = true
+properties/2/sync = true
+properties/3/path = NodePath("..:area_name")
+properties/3/spawn = true
+properties/3/sync = true
+properties/4/path = NodePath("..:level")
+properties/4/spawn = true
+properties/4/sync = true
 
 [node name="GameTile" type="Node3D"]
+script = ExtResource("1_j6n10")
 
 [node name="TileBlock" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.1, 0, 0, 0, 1, 0, 0.05, 0)
-mesh = SubResource("BoxMesh_uj6sb")
+transform = Transform3D(1, 0, 0, 0, 0.1, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("BoxMesh_duj3j")
 
 [node name="Owner" type="Label3D" parent="."]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 2.5, -0.5)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.5, -0.5)
 text = "Player 1"
 
 [node name="Title" type="Label3D" parent="."]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 2, -0.5)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.3, -0.5)
+billboard = 1
 text = "Area Name"
-
-[node name="Description" type="Label3D" parent="."]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 1.5, -0.5)
-text = "Buy：$1000
-Upgrade：$2000
-Price：
-- $100 
-- $1000
-- $5000
-- $10000"
-font_size = 12
 
 [node name="Level" type="Node3D" parent="."]
 
 [node name="Level1" type="MeshInstance3D" parent="Level"]
 transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0.3, 0.3)
-mesh = SubResource("BoxMesh_24f1h")
+mesh = SubResource("BoxMesh_u6n0w")
 
 [node name="Level2" type="MeshInstance3D" parent="Level"]
 transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0.7, 0.3)
-mesh = SubResource("BoxMesh_24f1h")
+mesh = SubResource("BoxMesh_u6n0w")
 skeleton = NodePath("../Level1")
 
 [node name="Level3" type="MeshInstance3D" parent="Level"]
 transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 1.1, 0.3)
-mesh = SubResource("BoxMesh_24f1h")
+mesh = SubResource("BoxMesh_u6n0w")
 skeleton = NodePath("../Level1")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+root_path = NodePath(".")
+replication_config = SubResource("SceneReplicationConfig_ye542")

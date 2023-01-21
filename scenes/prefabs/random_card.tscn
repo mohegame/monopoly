@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://cgt5v53qpdq04"]
+
+[ext_resource type="Script" path="res://scripts/prefabs/random_card.gd" id="1_kle8m"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y3r7g"]
+albedo_color = Color(0.466667, 0.466667, 0.466667, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_1cnhc"]
+material = SubResource("StandardMaterial3D_y3r7g")
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_fsed0"]
+properties/0/path = NodePath("..:position")
+properties/0/spawn = true
+properties/0/sync = true
+properties/1/path = NodePath("..:rotation")
+properties/1/spawn = true
+properties/1/sync = true
+properties/2/path = NodePath("..:area_name")
+properties/2/spawn = true
+properties/2/sync = true
+
+[node name="RandomCard" type="Node3D"]
+script = ExtResource("1_kle8m")
+
+[node name="TileBlock" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.1, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("BoxMesh_1cnhc")
+
+[node name="Title" type="Label3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.3, -0.5)
+billboard = 1
+text = "Area Name"
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+root_path = NodePath(".")
+replication_config = SubResource("SceneReplicationConfig_fsed0")

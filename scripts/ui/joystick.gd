@@ -2,6 +2,8 @@ extends Control
 class_name Joystick
 
 @export
+var movement_radius: float = 100
+@export
 var button_color: Color = Color8(100, 100, 100, 100)
 @export
 var button_border_color: Color = Color8(50, 50, 50, 140)
@@ -34,7 +36,6 @@ func _draw() -> void:
 
 	self.draw_circle(self.size/2, self.radius , self.button_color)
 	self.draw_arc(self.size/2, self.radius - 5, 0, PI * 2, 200, self.button_border_color, 2)
-	pass
 
 func _gui_input(event: InputEvent) -> void:
 	var event_index = -1
@@ -59,22 +60,22 @@ func _gui_input(event: InputEvent) -> void:
 		if event is InputEventMouseMotion || event is InputEventScreenDrag:
 			self.target_position += event.relative
 			var distance = (self.target_position - self.original_position).length()
-			if distance > self.radius:
-				self.position = self.original_position + (self.target_position - self.original_position) * self.radius / distance 
+			if distance > self.movement_radius:
+				self.position = self.original_position + (self.target_position - self.original_position) * self.movement_radius / distance 
 			else:
 				self.position = self.target_position
 			
 			var direction = self.position - self.original_position
 
 			if direction.x > 0:
-				right = direction.x / self.radius
+				right = direction.x / self.movement_radius
 			else:
-				left = -direction.x / self.radius
+				left = -direction.x / self.movement_radius
 
 			if direction.y > 0:
-				backward = direction.y / self.radius
+				backward = direction.y / self.movement_radius
 			else:
-				forward = -direction.y / self.radius
+				forward = -direction.y / self.movement_radius
 	else:
 		self.position = self.original_position
 

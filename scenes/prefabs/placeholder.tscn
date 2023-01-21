@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://ck8apotpqsmf6"]
+
+[ext_resource type="Script" path="res://scripts/prefabs/placeholder.gd" id="1_uyvxg"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ydd1m"]
+albedo_color = Color(0.466667, 0.466667, 0.466667, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ev04c"]
+material = SubResource("StandardMaterial3D_ydd1m")
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_8roxn"]
+properties/0/path = NodePath("..:position")
+properties/0/spawn = true
+properties/0/sync = true
+properties/1/path = NodePath("..:rotation")
+properties/1/spawn = true
+properties/1/sync = true
+properties/2/path = NodePath("..:area_name")
+properties/2/spawn = true
+properties/2/sync = true
+
+[node name="Placeholder" type="Node3D"]
+script = ExtResource("1_uyvxg")
+
+[node name="TileBlock" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.1, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("BoxMesh_ev04c")
+
+[node name="Title" type="Label3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.3, -0.5)
+billboard = 1
+text = "Area Name"
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+root_path = NodePath(".")
+replication_config = SubResource("SceneReplicationConfig_8roxn")

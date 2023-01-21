@@ -29,7 +29,6 @@ material = SubResource("StandardMaterial3D_8b6e2")
 [sub_resource type="BoxMesh" id="BoxMesh_gm300"]
 
 [node name="Main" type="Node3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0316505, -0.0366926, -0.0488529)
 script = ExtResource("1_2abh6")
 
 [node name="Camera" type="Camera3D" parent="."]
@@ -50,7 +49,7 @@ transform = Transform3D(40, 0, 0, 0, 1, 0, 0, 0, 40, 0, -0.5, 0)
 shape = SubResource("BoxShape3D_ekk1y")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Floor"]
-transform = Transform3D(20, 0, 0, 0, 20, 7.10543e-14, 0, -7.10543e-14, 20, -0.0346965, 0.135498, -0.0636702)
+transform = Transform3D(20, 0, 0, 0, 20, 7.10543e-14, 0, -7.10543e-14, 20, 0, 0, 0)
 mesh = SubResource("PlaneMesh_otcuc")
 skeleton = NodePath("../CollisionShape3D")
 
@@ -93,7 +92,7 @@ mesh = SubResource("BoxMesh_gm300")
 [node name="GameObjects" type="Node3D" parent="."]
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="GameObjects"]
-_spawnable_scenes = PackedStringArray("res://scenes/prefabs/pawn.tscn", "res://scenes/prefabs/random.tscn", "res://scenes/prefabs/tile.tscn")
+_spawnable_scenes = PackedStringArray("res://scenes/prefabs/pawn.tscn", "res://scenes/prefabs/random.tscn", "res://scenes/prefabs/tile.tscn", "res://scenes/prefabs/random_card.tscn", "res://scenes/prefabs/placeholder.tscn")
 spawn_path = NodePath("..")
 
 [node name="Players" type="Node3D" parent="."]
@@ -136,6 +135,7 @@ offset_bottom = -200.0
 grow_vertical = 0
 pivot_offset = Vector2(50, 50)
 script = ExtResource("2_jjqbt")
+movement_radius = 150.0
 button_border_color = Color(0.235294, 0.235294, 0.235294, 0.54902)
 input_action_left = "move_left"
 input_action_right = "move_right"
@@ -157,8 +157,9 @@ grow_horizontal = 0
 grow_vertical = 0
 pivot_offset = Vector2(50, 50)
 script = ExtResource("2_jjqbt")
+movement_radius = 150.0
 button_border_color = Color(0.235294, 0.235294, 0.235294, 0.54902)
-input_action_left = "look_left"
-input_action_right = "look_right"
+input_action_left = "look_right"
+input_action_right = "look_left"
 input_action_forward = "look_up"
 input_action_backward = "look_down"

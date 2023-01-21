@@ -1,23 +1,41 @@
-[gd_scene load_steps=3 format=3 uid="uid://d2oxfd4x3etkm"]
+[gd_scene load_steps=5 format=3 uid="uid://d2oxfd4x3etkm"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_nurjm"]
+[ext_resource type="Script" path="res://scripts/prefabs/random.gd" id="1_igodn"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_05mxi"]
+[sub_resource type="BoxMesh" id="BoxMesh_soper"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3fetf"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_pnpta"]
+properties/0/path = NodePath("..:position")
+properties/0/spawn = true
+properties/0/sync = true
+properties/1/path = NodePath("..:rotation")
+properties/1/spawn = true
+properties/1/sync = true
+properties/2/path = NodePath("..:number")
+properties/2/spawn = true
+properties/2/sync = true
 
 [node name="Random" type="Node3D"]
+script = ExtResource("1_igodn")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.1, 0, 0, 0, 1, 0, 0, 0)
-mesh = SubResource("BoxMesh_nurjm")
+mesh = SubResource("BoxMesh_soper")
 
 [node name="Area3D" type="Area3D" parent="."]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 transform = Transform3D(1, 0, 0, 0, 2, 0, 0, 0, 1, 0, 1, 0)
-shape = SubResource("BoxShape3D_05mxi")
+shape = SubResource("BoxShape3D_3fetf")
 
 [node name="Number" type="Label3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
 billboard = 2
 text = "24"
 font_size = 200
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+root_path = NodePath(".")
+replication_config = SubResource("SceneReplicationConfig_pnpta")
