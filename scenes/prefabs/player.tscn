@@ -3,9 +3,11 @@
 [ext_resource type="Script" path="res://scripts/prefabs/player.gd" id="1_0ipyv"]
 [ext_resource type="PackedScene" uid="uid://dm6o55jfrmxfv" path="res://assets/character.glb" id="2_w4u4e"]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_lts1m"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_6yfst"]
+margin = 0.001
+radius = 0.4
 
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_2qxm7"]
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_jxaee"]
 properties/0/path = NodePath("..:position")
 properties/0/spawn = true
 properties/0/sync = true
@@ -24,10 +26,10 @@ script = ExtResource("1_0ipyv")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.09802, 0, 1, 0)
-shape = SubResource("CapsuleShape3D_lts1m")
+shape = SubResource("CapsuleShape3D_6yfst")
 
 [node name="Label3D" type="Label3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
 billboard = 1
 text = "Player Name"
 
@@ -36,4 +38,4 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 root_path = NodePath(".")
-replication_config = SubResource("SceneReplicationConfig_2qxm7")
+replication_config = SubResource("SceneReplicationConfig_jxaee")

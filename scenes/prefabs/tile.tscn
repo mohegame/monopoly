@@ -1,20 +1,22 @@
-[gd_scene load_steps=7 format=3 uid="uid://bpnawg7su2kht"]
+[gd_scene load_steps=14 format=3 uid="uid://bpnawg7su2kht"]
 
 [ext_resource type="Script" path="res://scripts/prefabs/tile.gd" id="1_j6n10"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_65vkt"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fhjb6"]
 albedo_color = Color(0.466667, 0.466667, 0.466667, 1)
 
-[sub_resource type="BoxMesh" id="BoxMesh_duj3j"]
-material = SubResource("StandardMaterial3D_65vkt")
+[sub_resource type="BoxMesh" id="BoxMesh_po1x6"]
+material = SubResource("StandardMaterial3D_fhjb6")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6tiw0"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_io1d7"]
 albedo_color = Color(0.466667, 0.466667, 0.466667, 1)
 
-[sub_resource type="BoxMesh" id="BoxMesh_u6n0w"]
-material = SubResource("StandardMaterial3D_6tiw0")
+[sub_resource type="BoxMesh" id="BoxMesh_kkmci"]
+material = SubResource("StandardMaterial3D_io1d7")
 
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_ye542"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_66ltg"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_2rgtt"]
 properties/0/path = NodePath("..:position")
 properties/0/spawn = true
 properties/0/sync = true
@@ -30,16 +32,55 @@ properties/3/sync = true
 properties/4/path = NodePath("..:level")
 properties/4/spawn = true
 properties/4/sync = true
+properties/5/path = NodePath("..:mortgaged")
+properties/5/spawn = true
+properties/5/sync = true
+properties/6/path = NodePath("..:group")
+properties/6/spawn = true
+properties/6/sync = true
+properties/7/path = NodePath("..:level_fee")
+properties/7/spawn = true
+properties/7/sync = true
+properties/8/path = NodePath("..:toll_fee")
+properties/8/spawn = true
+properties/8/sync = true
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h826m"]
+bg_color = Color(0.129412, 0.14902, 0.180392, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+
+[sub_resource type="Theme" id="Theme_kte34"]
+Label/styles/normal = SubResource("StyleBoxFlat_h826m")
+
+[sub_resource type="LabelSettings" id="LabelSettings_o7tl4"]
+font_size = 40
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6gukl"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(0.188235, 0.215686, 0.262745, 1)
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="Theme" id="Theme_jlhmb"]
+Label/styles/normal = SubResource("StyleBoxFlat_6gukl")
+
+[sub_resource type="LabelSettings" id="LabelSettings_k1g4c"]
+font_size = 30
 
 [node name="GameTile" type="Node3D"]
 script = ExtResource("1_j6n10")
 
 [node name="TileBlock" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.1, 0, 0, 0, 1, 0, 0, 0)
-mesh = SubResource("BoxMesh_duj3j")
+mesh = SubResource("BoxMesh_po1x6")
 
 [node name="Owner" type="Label3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.5, -0.5)
+billboard = 1
 text = "Player 1"
 
 [node name="Title" type="Label3D" parent="."]
@@ -51,18 +92,105 @@ text = "Area Name"
 
 [node name="Level1" type="MeshInstance3D" parent="Level"]
 transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0.3, 0.3)
-mesh = SubResource("BoxMesh_u6n0w")
+mesh = SubResource("BoxMesh_kkmci")
 
 [node name="Level2" type="MeshInstance3D" parent="Level"]
 transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0.7, 0.3)
-mesh = SubResource("BoxMesh_u6n0w")
+mesh = SubResource("BoxMesh_kkmci")
 skeleton = NodePath("../Level1")
 
 [node name="Level3" type="MeshInstance3D" parent="Level"]
 transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 1.1, 0.3)
-mesh = SubResource("BoxMesh_u6n0w")
+mesh = SubResource("BoxMesh_kkmci")
 skeleton = NodePath("../Level1")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 2, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("BoxShape3D_66ltg")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 root_path = NodePath(".")
-replication_config = SubResource("SceneReplicationConfig_ye542")
+replication_config = SubResource("SceneReplicationConfig_2rgtt")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Card" type="VSplitContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -407.0
+offset_top = -150.0
+offset_right = -7.0
+offset_bottom = 150.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="Title" type="Label" parent="Control/Card"]
+layout_mode = 2
+size_flags_vertical = 0
+theme = SubResource("Theme_kte34")
+text = "Title"
+label_settings = SubResource("LabelSettings_o7tl4")
+horizontal_alignment = 1
+
+[node name="Description" type="Label" parent="Control/Card"]
+layout_mode = 2
+size_flags_vertical = 1
+theme = SubResource("Theme_jlhmb")
+text = "Content"
+label_settings = SubResource("LabelSettings_k1g4c")
+
+[node name="Upgrade" type="Button" parent="Control"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -151.0
+offset_bottom = 91.0
+grow_horizontal = 0
+text = "Upgrade"
+
+[node name="Downgrade" type="Button" parent="Control"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -304.0
+offset_right = -153.0
+offset_bottom = 91.0
+grow_horizontal = 0
+text = "Downgrade"
+
+[node name="Mortgage" type="Button" parent="Control"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -457.0
+offset_right = -306.0
+offset_bottom = 91.0
+grow_horizontal = 0
+text = "Mortgage"
+
+[node name="Buy" type="Button" parent="Control"]
+layout_mode = 1
+offset_right = 151.0
+offset_bottom = 91.0
+text = "Buy"
+
+[connection signal="button_up" from="Control/Upgrade" to="." method="_on_upgrade_button_up"]
+[connection signal="button_up" from="Control/Downgrade" to="." method="_on_downgrade_button_up"]
+[connection signal="button_up" from="Control/Mortgage" to="." method="_on_mortgage_button_up"]
+[connection signal="button_up" from="Control/Buy" to="." method="_on_buy_button_up"]

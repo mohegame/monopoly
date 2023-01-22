@@ -84,7 +84,7 @@ func _process(_delta: float) -> void:
 		self.visible = true
 
 	if self.attached_object != null:
-		self.attached_object.position = self.position + Vector3(0,2.5,0)
+		self.attached_object.position = self.position + Vector3(0,1.7,0)
 
 	if self.animation_player.current_animation != self.state:
 		self.animation_player.current_animation = self.state

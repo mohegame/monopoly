@@ -56,25 +56,34 @@ func _ready() -> void:
 				object.position = Vector3(x, 0, z)
 				object.rotate_y(y_ratation)
 				object.area_name = item.name
-				object.level = 1
+				object.group = item.group
+				object.purchase_prices = item.purchase_price
+				object.toll_fees = item.toll_fee
+				object.level = 0
+				object.player_states = self.game_state
 				self.game_objects.add_child(object, true)
 			GameTileData.DATA_KIND_CHANCE:
 				var object: Node3D = random_card_class.instantiate()
 				object.position = Vector3(x, 0, z)
 				object.rotate_y(y_ratation)
 				object.area_name = item.name
+				object.area_description = item.description
+				object.cards = game_tile_data.chance_cards
 				self.game_objects.add_child(object, true)
 			GameTileData.DATA_KIND_DESTINY:
 				var object: Node3D = random_card_class.instantiate()
 				object.position = Vector3(x, 0, z)
 				object.rotate_y(y_ratation)
 				object.area_name = item.name
+				object.area_description = item.description
+				object.cards = game_tile_data.destiny_cards
 				self.game_objects.add_child(object, true)
 			GameTileData.DATA_KIND_PLACEHOLDER:
 				var object: Node3D = placeholder_class.instantiate()
 				object.position = Vector3(x, 0, z)
 				object.rotate_y(y_ratation)
 				object.area_name = item.name
+				object.area_description = item.description
 				self.game_objects.add_child(object, true)
 			GameTileData.DATA_KIND_RANDOM:
 				var object: Node3D = random_class.instantiate()

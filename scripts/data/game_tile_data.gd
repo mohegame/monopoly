@@ -142,7 +142,7 @@ var data: Array = [
 		"name": "机会",
 		"position": Vector2(0, 4),
 		"orientation": ORIENTATION_EAST,
-		"description": "",
+		"description": "抽取一张机会卡",
 	},
 	{
 		"kind": DATA_KIND_COUNTRY,
@@ -220,7 +220,7 @@ var data: Array = [
 		"name": "命运",
 		"position": Vector2(4, 8),
 		"orientation": ORIENTATION_SOUTH,
-		"description": "",
+		"description": "抽取一张命运卡",
 	},
 	{
 		"kind": DATA_KIND_COUNTRY,
@@ -297,7 +297,7 @@ var data: Array = [
 		"name": "机会",
 		"position": Vector2(8, 4),
 		"orientation": ORIENTATION_WEST,
-		"description": "",
+		"description": "抽取一张机会卡",
 	},
 	{
 		"kind": DATA_KIND_COUNTRY,
@@ -337,4 +337,27 @@ var data: Array = [
 		"orientation": ORIENTATION_SOUTH,
 		"description": "",
 	}
+]
+
+
+var destiny_cards: Array = [
+	{
+		"name": "小赌怡情",
+		"description": "打麻将输掉 $1000",
+	},
+	{
+		"name": "外卖卡",
+		"description": "送外卖获得 $1000",
+	},
+]
+
+var chance_cards: Array = [
+	{
+		"name": "地产大亨",
+		"description": "选择自己最多 1 处地产，升 1 级",
+	},
+	{
+		"name": "商人眼光",
+		"description": "选择自己的 1 处地产，降 1 级",
+	},
 ]

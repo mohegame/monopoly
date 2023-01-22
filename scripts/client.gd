@@ -3,7 +3,7 @@ extends Node3D
 var camera: Node3D
 var camera_yaw_angle: float = 0
 var camera_pitch_angle: float = 0
-var camera_original_position: Vector3 = Vector3(0, 3, 5)
+var camera_original_position: Vector3 = Vector3(0, 2, 3.5)
 var camera_current_position: Vector3 = self.camera_original_position
 var connected = false
 var player: Player

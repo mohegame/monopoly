@@ -1,14 +1,16 @@
-[gd_scene load_steps=5 format=3 uid="uid://cgt5v53qpdq04"]
+[gd_scene load_steps=13 format=3 uid="uid://cgt5v53qpdq04"]
 
 [ext_resource type="Script" path="res://scripts/prefabs/random_card.gd" id="1_kle8m"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y3r7g"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i05qx"]
 albedo_color = Color(0.466667, 0.466667, 0.466667, 1)
 
-[sub_resource type="BoxMesh" id="BoxMesh_1cnhc"]
-material = SubResource("StandardMaterial3D_y3r7g")
+[sub_resource type="BoxMesh" id="BoxMesh_3ufph"]
+material = SubResource("StandardMaterial3D_i05qx")
 
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_fsed0"]
+[sub_resource type="BoxMesh" id="BoxMesh_v61g1"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_tevbe"]
 properties/0/path = NodePath("..:position")
 properties/0/spawn = true
 properties/0/sync = true
@@ -18,19 +20,133 @@ properties/1/sync = true
 properties/2/path = NodePath("..:area_name")
 properties/2/spawn = true
 properties/2/sync = true
+properties/3/path = NodePath("..:area_description")
+properties/3/spawn = true
+properties/3/sync = true
+properties/4/path = NodePath("..:card_name")
+properties/4/spawn = true
+properties/4/sync = true
+properties/5/path = NodePath("..:card_description")
+properties/5/spawn = true
+properties/5/sync = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ilrrq"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k5ygx"]
+bg_color = Color(0.129412, 0.14902, 0.180392, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+
+[sub_resource type="Theme" id="Theme_17fes"]
+Label/styles/normal = SubResource("StyleBoxFlat_k5ygx")
+
+[sub_resource type="LabelSettings" id="LabelSettings_c3x1d"]
+font_size = 40
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e7m1d"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(0.188235, 0.215686, 0.262745, 1)
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="Theme" id="Theme_nu3y5"]
+Label/styles/normal = SubResource("StyleBoxFlat_e7m1d")
+
+[sub_resource type="LabelSettings" id="LabelSettings_4yoy4"]
+font_size = 30
 
 [node name="RandomCard" type="Node3D"]
 script = ExtResource("1_kle8m")
 
 [node name="TileBlock" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.1, 0, 0, 0, 1, 0, 0, 0)
-mesh = SubResource("BoxMesh_1cnhc")
+mesh = SubResource("BoxMesh_3ufph")
 
 [node name="Title" type="Label3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.3, -0.5)
 billboard = 1
 text = "Area Name"
 
+[node name="Card" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Card"]
+transform = Transform3D(0.8, 0, 0, 0, 1.2, 0, 0, 0, 0.01, 0, 1.3, 0)
+mesh = SubResource("BoxMesh_v61g1")
+
+[node name="Title" type="Label3D" parent="Card"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 1.73, -0.01)
+text = "Title
+"
+
+[node name="Description" type="Label3D" parent="Card"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.343692, 1.57878, -0.01)
+text = "Content"
+font_size = 20
+horizontal_alignment = 0
+vertical_alignment = 0
+autowrap_mode = 1
+width = 140.0
+
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 root_path = NodePath(".")
-replication_config = SubResource("SceneReplicationConfig_fsed0")
+replication_config = SubResource("SceneReplicationConfig_tevbe")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 2, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("BoxShape3D_ilrrq")
+
+[node name="Control" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Card" type="VSplitContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -407.0
+offset_top = -150.0
+offset_right = -7.0
+offset_bottom = 150.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="Title" type="Label" parent="Control/Card"]
+layout_mode = 2
+size_flags_vertical = 0
+theme = SubResource("Theme_17fes")
+text = "Title"
+label_settings = SubResource("LabelSettings_c3x1d")
+horizontal_alignment = 1
+
+[node name="Description" type="Label" parent="Control/Card"]
+layout_mode = 2
+size_flags_vertical = 1
+theme = SubResource("Theme_nu3y5")
+text = "Content"
+label_settings = SubResource("LabelSettings_4yoy4")
+
+[node name="Draw" type="Button" parent="Control"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -151.0
+offset_bottom = 91.0
+grow_horizontal = 0
+text = "Draw"
+
+[connection signal="button_up" from="Control/Draw" to="." method="_on_draw_button_up"]

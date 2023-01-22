@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/controllers/player_controller.gd" id="1_m0syc"]
 
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_f2xy0"]
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_2sw1k"]
 properties/0/path = NodePath("..:player_states")
 properties/0/spawn = true
 properties/0/sync = true
@@ -10,7 +10,7 @@ properties/1/path = NodePath("..:owner_id")
 properties/1/spawn = true
 properties/1/sync = true
 
-[sub_resource type="LabelSettings" id="LabelSettings_jcode"]
+[sub_resource type="LabelSettings" id="LabelSettings_oqgth"]
 font_size = 50
 font_color = Color(0, 0, 0, 1)
 
@@ -19,7 +19,7 @@ script = ExtResource("1_m0syc")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 root_path = NodePath(".")
-replication_config = SubResource("SceneReplicationConfig_f2xy0")
+replication_config = SubResource("SceneReplicationConfig_2sw1k")
 public_visibility = false
 
 [node name="Control" type="Control" parent="."]
@@ -29,6 +29,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="Score" type="Label" parent="Control"]
 layout_mode = 1
@@ -40,4 +41,4 @@ offset_right = 85.5
 offset_bottom = 72.0
 grow_horizontal = 2
 text = "$10000"
-label_settings = SubResource("LabelSettings_jcode")
+label_settings = SubResource("LabelSettings_oqgth")

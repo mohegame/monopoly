@@ -1,14 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://ck8apotpqsmf6"]
+[gd_scene load_steps=12 format=3 uid="uid://ck8apotpqsmf6"]
 
 [ext_resource type="Script" path="res://scripts/prefabs/placeholder.gd" id="1_uyvxg"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ydd1m"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hy7jb"]
 albedo_color = Color(0.466667, 0.466667, 0.466667, 1)
 
-[sub_resource type="BoxMesh" id="BoxMesh_ev04c"]
-material = SubResource("StandardMaterial3D_ydd1m")
+[sub_resource type="BoxMesh" id="BoxMesh_yx2ri"]
+material = SubResource("StandardMaterial3D_hy7jb")
 
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_8roxn"]
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_bnv5m"]
 properties/0/path = NodePath("..:position")
 properties/0/spawn = true
 properties/0/sync = true
@@ -18,13 +18,44 @@ properties/1/sync = true
 properties/2/path = NodePath("..:area_name")
 properties/2/spawn = true
 properties/2/sync = true
+properties/3/path = NodePath("..:area_description")
+properties/3/spawn = true
+properties/3/sync = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xj1gg"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fw5h6"]
+bg_color = Color(0.129412, 0.14902, 0.180392, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+
+[sub_resource type="Theme" id="Theme_kwjq6"]
+Label/styles/normal = SubResource("StyleBoxFlat_fw5h6")
+
+[sub_resource type="LabelSettings" id="LabelSettings_1gnj6"]
+font_size = 40
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u1q8v"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(0.188235, 0.215686, 0.262745, 1)
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="Theme" id="Theme_081e3"]
+Label/styles/normal = SubResource("StyleBoxFlat_u1q8v")
+
+[sub_resource type="LabelSettings" id="LabelSettings_d4a8h"]
+font_size = 30
 
 [node name="Placeholder" type="Node3D"]
 script = ExtResource("1_uyvxg")
 
 [node name="TileBlock" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.1, 0, 0, 0, 1, 0, 0, 0)
-mesh = SubResource("BoxMesh_ev04c")
+mesh = SubResource("BoxMesh_yx2ri")
 
 [node name="Title" type="Label3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.3, -0.5)
@@ -33,4 +64,48 @@ text = "Area Name"
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 root_path = NodePath(".")
-replication_config = SubResource("SceneReplicationConfig_8roxn")
+replication_config = SubResource("SceneReplicationConfig_bnv5m")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 2, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("BoxShape3D_xj1gg")
+
+[node name="Control" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Card" type="VSplitContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -150.0
+offset_bottom = 150.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="Title" type="Label" parent="Control/Card"]
+layout_mode = 2
+size_flags_vertical = 0
+theme = SubResource("Theme_kwjq6")
+text = "Title"
+label_settings = SubResource("LabelSettings_1gnj6")
+horizontal_alignment = 1
+
+[node name="Description" type="Label" parent="Control/Card"]
+layout_mode = 2
+size_flags_vertical = 1
+theme = SubResource("Theme_081e3")
+text = "Content"
+label_settings = SubResource("LabelSettings_d4a8h")
