@@ -1,8 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://b6rphxh1g8t36"]
+[gd_scene load_steps=8 format=3 uid="uid://b6rphxh1g8t36"]
 
 [ext_resource type="Script" path="res://scripts/controllers/player_controller.gd" id="1_m0syc"]
 
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_2sw1k"]
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_vshls"]
 properties/0/path = NodePath("..:player_states")
 properties/0/spawn = true
 properties/0/sync = true
@@ -10,16 +10,28 @@ properties/1/path = NodePath("..:owner_id")
 properties/1/spawn = true
 properties/1/sync = true
 
-[sub_resource type="LabelSettings" id="LabelSettings_oqgth"]
-font_size = 50
-font_color = Color(0, 0, 0, 1)
+[sub_resource type="Theme" id="Theme_dgwo2"]
+Button/font_sizes/font_size = 30
+
+[sub_resource type="Theme" id="Theme_s3bej"]
+LineEdit/font_sizes/font_size = 40
+
+[sub_resource type="Theme" id="Theme_1brk8"]
+Button/font_sizes/font_size = 30
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_osk1e"]
+bg_color = Color(0.129412, 0.14902, 0.180392, 1)
+
+[sub_resource type="Theme" id="Theme_apvpv"]
+Label/font_sizes/font_size = 24
+Label/styles/normal = SubResource("StyleBoxFlat_osk1e")
 
 [node name="PlayerController" type="Node3D"]
 script = ExtResource("1_m0syc")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 root_path = NodePath(".")
-replication_config = SubResource("SceneReplicationConfig_2sw1k")
+replication_config = SubResource("SceneReplicationConfig_vshls")
 public_visibility = false
 
 [node name="Control" type="Control" parent="."]
@@ -31,7 +43,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Score" type="Label" parent="Control"]
+[node name="Score" type="Button" parent="Control"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -40,5 +52,40 @@ offset_left = -85.5
 offset_right = 85.5
 offset_bottom = 72.0
 grow_horizontal = 2
+theme = SubResource("Theme_dgwo2")
 text = "$10000"
-label_settings = SubResource("LabelSettings_oqgth")
+
+[node name="LoginPane" type="VBoxContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -225.5
+offset_top = -82.5
+offset_right = 225.5
+offset_bottom = 82.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PlayerName" type="LineEdit" parent="Control/LoginPane"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+theme = SubResource("Theme_s3bej")
+placeholder_text = "Player Name"
+max_length = 20
+
+[node name="Login" type="Button" parent="Control/LoginPane"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+theme = SubResource("Theme_1brk8")
+text = "Login"
+
+[node name="Description" type="Label" parent="Control/LoginPane"]
+layout_mode = 2
+theme = SubResource("Theme_apvpv")
+autowrap_mode = 1
+
+[connection signal="button_up" from="Control/Score" to="." method="_on_score_button_up"]
+[connection signal="button_up" from="Control/LoginPane/Login" to="." method="_on_login_button_up"]

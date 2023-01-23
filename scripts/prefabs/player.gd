@@ -15,6 +15,7 @@ var forward_yaw_angle: float = 0
 var player_id: int
 var attached_object: Node3D
 var animation_player: AnimationPlayer
+var label_player_name: Label3D
 
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
@@ -27,11 +28,16 @@ func initialize() -> void:
 	self.initialized = true
 	return
 
+func set_player_name(player_name: String):
+	self.label_player_name.text = player_name
+	return
+
 func _enter_tree() -> void:
 	self.animation_player = self.get_node("Character/AnimationPlayer")
 	self.player_id = str(self.name).to_int()
 	self.set_multiplayer_authority(self.player_id)
 	self.state = "Idle2"
+	self.label_player_name = self.get_node("PlayerName")
 
 func _physics_process(delta: float) -> void:
 	if !self.initialized:

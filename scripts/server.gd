@@ -32,7 +32,7 @@ func _ready() -> void:
 	var random_class = preload("res://scenes/prefabs/random.tscn")
 	var placeholder_class = preload("res://scenes/prefabs/placeholder.tscn")
 	var random_card_class = preload("res://scenes/prefabs/random_card.tscn")
-	
+
 	var game_tile_data = GameTileData.new()
 	for item in game_tile_data.data:
 		var width = game_tile_data.chess_board.width * game_tile_data.chess_board.side_length
@@ -95,7 +95,7 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	# Move freely.
-	
+
 	var value = Input.get_axis("move_right", "move_left")
 	if value != 0:
 		self.camera.position.z += delta * self.move_speed * value
@@ -113,40 +113,24 @@ func _process(delta: float) -> void:
 func add_player(id: int):
 	print("Client ", id, " connected")
 	self.player_count += 1
-	
+
 	var player_state = Dictionary()
-	player_state.name = "TestPlayer"
+	player_state.name = "Player"
 	player_state.id = id
 	player_state.score = 10000
 	self.game_state[id] = player_state
-
-	var player = preload("res://scenes/prefabs/player.tscn").instantiate()
-	player.name = str(id)
-	self.players.add_child(player)
 
 	var player_controller = preload("res://scenes/prefabs/player_controller.tscn").instantiate()
 	player_controller.name = str(id)
 	player_controller.player_index = self.player_count
 	player_controller.owner_id = id
+	player_controller.player_state = player_state
 	player_controller.player_states = self.game_state
 	self.player_controllers.add_child(player_controller)
 
-	var pawn = preload("res://scenes/prefabs/pawn.tscn").instantiate()
-	pawn.name = "pawn-" + str(id)
-	self.game_objects.add_child(pawn)
-
-
-
 func remove_player(id: int):
-	var player = self.players.get_node(str(id))
-	if player:
-		player.queue_free()
-	
 	var player_controller = self.player_controllers.get_node(str(id))
 	if player_controller:
 		player_controller.queue_free()
-		
-	var pawn = self.game_objects.get_node("pawn-" + str(id))
-	if pawn:
-		pawn.queue_free()
+
 	print("Client ", id, " disconnected")
