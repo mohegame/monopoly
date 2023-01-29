@@ -73,18 +73,33 @@ grow_vertical = 2
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 theme = SubResource("Theme_evq0a")
-placeholder_text = "Player Name"
+placeholder_text = "玩家名称"
 max_length = 8
 
 [node name="Login" type="Button" parent="Control/LoginPane"]
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
 theme = SubResource("Theme_2515j")
-text = "Login"
+text = "登陆"
 
 [node name="Description" type="Label" parent="Control/LoginPane"]
 layout_mode = 2
 theme = SubResource("Theme_pmu5t")
 autowrap_mode = 1
 
+[node name="Lift" type="Button" parent="Control"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -74.0
+offset_top = -56.0
+offset_right = 74.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "举起棋子"
+
 [connection signal="button_up" from="Control/LoginPane/Login" to="." method="_on_login_button_up"]
+[connection signal="button_up" from="Control/Lift" to="." method="_on_lift_button_up"]

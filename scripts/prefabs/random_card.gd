@@ -34,6 +34,7 @@ func _ready():
 	self.control = self.get_node("Control")
 	self.card = self.get_node("Card")
 	self.area = self.get_node("Area3D")
+	self.control.visible = false
 	if !self.multiplayer.is_server():
 		self.area.body_entered.connect(_player_entered)
 		self.area.body_exited.connect(_player_exited)

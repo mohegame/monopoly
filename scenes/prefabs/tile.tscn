@@ -116,7 +116,6 @@ root_path = NodePath(".")
 replication_config = SubResource("SceneReplicationConfig_roo4i")
 
 [node name="Control" type="Control" parent="."]
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -162,7 +161,7 @@ anchor_right = 1.0
 offset_left = -151.0
 offset_bottom = 91.0
 grow_horizontal = 0
-text = "Upgrade"
+text = "升级"
 
 [node name="Downgrade" type="Button" parent="Control"]
 layout_mode = 1
@@ -173,7 +172,7 @@ offset_left = -304.0
 offset_right = -153.0
 offset_bottom = 91.0
 grow_horizontal = 0
-text = "Downgrade"
+text = "降级"
 
 [node name="Mortgage" type="Button" parent="Control"]
 layout_mode = 1
@@ -184,13 +183,13 @@ offset_left = -457.0
 offset_right = -306.0
 offset_bottom = 91.0
 grow_horizontal = 0
-text = "Mortgage"
+text = "抵押"
 
 [node name="Buy" type="Button" parent="Control"]
 layout_mode = 1
 offset_right = 151.0
 offset_bottom = 91.0
-text = "Buy"
+text = "购买"
 
 [connection signal="button_up" from="Control/Upgrade" to="." method="_on_upgrade_button_up"]
 [connection signal="button_up" from="Control/Downgrade" to="." method="_on_downgrade_button_up"]

@@ -7,6 +7,7 @@ var owner_id: int = 0
 @export
 var player_states: Dictionary
 var player_state: Dictionary
+var offline_player_states: Dictionary
 
 var player_index = 0
 var start_positions: Node3D
@@ -22,6 +23,7 @@ var button_login: Button
 var container_login_pane: VBoxContainer
 var initialized: bool = false
 var menu_items: Array
+var button_lift: Button
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -32,6 +34,7 @@ func _ready():
 	self.label_description = self.get_node("Control/LoginPane/Description")
 	self.button_login = self.get_node("Control/LoginPane/Login")
 	self.container_login_pane = self.get_node("Control/LoginPane")
+	self.button_lift = self.get_node("Control/Lift")
 	self.control = self.get_node("Control")
 	self.game_objects = self.get_node("../../GameObjects")
 	self.control.visible = false
@@ -64,10 +67,12 @@ func _process(_delta):
 	var player_names = []
 	var player_names_dict = {}
 	for item in player_array:
-		var item_name = "$%-10d%s" % [item.score, item.name]
-		player_names.append(item_name)
-		player_names_dict[item_name] = true
-	
+		if item.name == "":
+			continue
+		var player_name = "$%-10d%s" % [item.score, item.name]
+		player_names.append(player_name)
+		player_names_dict[player_name] = true
+
 	if !(player_names.size() == self.menu_items.size() && player_names_dict.has_all(self.menu_items)):
 		self.button_score.get_popup().clear()
 		self.menu_items.clear()
@@ -95,7 +100,7 @@ func add_player(player_name: String):
 	for i in self.player_states:
 		var state = self.player_states[i]
 		if state.name == player_name:
-			rpc_id(self.owner_id, "failed_to_add_player", "Player name {0} already exists".format([player_name]))
+			rpc_id(self.owner_id, "failed_to_add_player", "玩家名称 {0} 已存在".format([player_name]))
 			return
 	self.player = preload("res://scenes/prefabs/player.tscn").instantiate()
 	self.player.name = str(self.owner_id)
@@ -106,6 +111,10 @@ func add_player(player_name: String):
 	self.game_objects.add_child(pawn)
 
 	self.player_state.name = player_name
+	var offline_player_state = self.offline_player_states.get(player_name)
+	if offline_player_state != null:
+		self.player_state.score = offline_player_state.score
+		self.offline_player_states.erase(player_name)
 
 	var position_index = self.player_index % self.start_positions.get_children().size()
 	var transfrom = self.start_positions.get_node("StartPosition"+str(position_index)).transform
@@ -123,3 +132,11 @@ func _on_login_button_up():
 	if self.line_edit_player_name.text == "":
 		return
 	rpc_id(1, "add_player", self.line_edit_player_name.text)
+
+
+func _on_lift_button_up() -> void:
+	self.player.toggle_attached_object()
+	if self.player.attached_object == null:
+		self.button_lift.text = "举起棋子"
+	else:
+		self.button_lift.text = "放下棋子"

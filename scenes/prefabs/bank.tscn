@@ -42,7 +42,7 @@ mesh = SubResource("BoxMesh_s8wig")
 [node name="Title" type="Label3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.3, -0.5)
 billboard = 1
-text = "Bank"
+text = "银行"
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 root_path = NodePath(".")
@@ -87,7 +87,7 @@ offset_left = -36.5
 offset_right = 36.5
 offset_bottom = 45.0
 grow_horizontal = 2
-text = "Bank"
+text = "银行"
 label_settings = SubResource("LabelSettings_yu2ig")
 
 [node name="Label" type="Label" parent="Control/Panel"]
@@ -103,7 +103,7 @@ offset_right = -67.0
 offset_bottom = 19.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "Amount"
+text = "金额"
 label_settings = SubResource("LabelSettings_5iyfb")
 
 [node name="Amount" type="LineEdit" parent="Control/Panel"]
@@ -136,7 +136,7 @@ offset_right = -50.5
 offset_bottom = -14.0
 grow_horizontal = 2
 grow_vertical = 0
-text = "Gain"
+text = "从银行提取"
 
 [node name="PayTo" type="MenuButton" parent="Control/Panel"]
 layout_mode = 0
@@ -145,6 +145,6 @@ offset_top = 160.0
 offset_right = 410.0
 offset_bottom = 215.0
 theme = SubResource("Theme_ucwe5")
-text = "Pay To"
+text = "支付给【银行/玩家】"
 
 [connection signal="button_up" from="Control/Panel/Gain" to="." method="_on_gain_button_up"]

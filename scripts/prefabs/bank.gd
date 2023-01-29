@@ -35,7 +35,7 @@ func _process(_delta):
 	
 	if !(self.player_names.size() == self.menu_items.size() && self.player_names.has_all(self.menu_items)):
 		self.menu_button_pay_to.get_popup().clear()
-		self.menu_button_pay_to.get_popup().add_item("Bank", 0)
+		self.menu_button_pay_to.get_popup().add_item("银行", 0)
 		self.menu_button_pay_to.get_popup().add_separator()
 		self.menu_items.clear()
 		for player_name in self.player_names:
@@ -64,6 +64,7 @@ func _pay_to(id: int):
 func _on_gain_button_up() -> void:
 	var text: String = self.line_edit_amount.text
 	self.rpc_id(1, "trade", 0, self.multiplayer.get_unique_id(), text.to_int())
+	self.line_edit_amount.text = ""
 
 @rpc("any_peer", "call_remote", "reliable")
 func trade(player_a: int, player_b: int, amount: int):

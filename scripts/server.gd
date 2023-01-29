@@ -9,6 +9,7 @@ var game: Node3D
 
 var player_count = 0
 var game_state: Dictionary
+var offline_player_states: Dictionary
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -133,11 +134,17 @@ func add_player(id: int):
 	player_controller.owner_id = id
 	player_controller.player_state = player_state
 	player_controller.player_states = self.game_state
+	player_controller.offline_player_states = self.offline_player_states
 	self.player_controllers.add_child(player_controller)
 
 func remove_player(id: int):
 	var player_controller = self.player_controllers.get_node(str(id))
 	if player_controller:
 		player_controller.queue_free()
+
+	var player_state = self.game_state.get(id)
+	if player_state != null:
+		offline_player_states[player_state.name] = player_state
+		self.game_state.erase(id)
 
 	print("Client ", id, " disconnected")

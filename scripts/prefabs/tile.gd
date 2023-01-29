@@ -38,6 +38,7 @@ func _ready():
 	self.button_mortgage = self.get_node("Control/Mortgage")
 	self.control = self.get_node("Control")
 	self.area = self.get_node("Area3D")
+	self.control.visible = false
 	if !self.multiplayer.is_server():
 		self.area.body_entered.connect(_player_entered)
 		self.area.body_exited.connect(_player_exited)
@@ -51,25 +52,25 @@ func _process(_delta):
 	if self.multiplayer.is_server():
 		return
 
-	if self.area_name != "" && self.control.visible:
+	if self.area_name != "":
 		var name_text = self.area_name
 		var description = ""
 		if mortgaged:
 			name_text += "[*]"
-			description += "[*]Mortgaged\n"
+			description += "[*]抵押\n"
 
 		self.label_owner.text = self.owner_name
 		self.label_area.text = name_text
 		if self.control.visible:
-			description += "Owner: {0}\n".format([self.owner_name])
-			description += "Level: {0}\n".format([self.level])
-			description += "Group: {0}\n".format([self.group])
-			description += "Buy/Upgrade: ${0}\n".format([self.level_fee])
-			description += "Toll Fee: ${0}\n".format([self.toll_fee])
+			description += "主人: {0}\n".format([self.owner_name])
+			description += "等级: {0}\n".format([self.level])
+			description += "地产组: {0}\n".format([self.group])
+			description += "购买/升级: ${0}\n".format([self.level_fee])
+			description += "过路费: ${0}\n".format([self.toll_fee])
 			if self.mortgaged:
-				self.button_mortgage.text = "Redeem"
+				self.button_mortgage.text = "赎回"
 			else:
-				self.button_mortgage.text = "Mortgage"
+				self.button_mortgage.text = "抵押"
 			self.label_title.text = name_text
 			self.label_description.text = description
 

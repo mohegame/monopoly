@@ -100,18 +100,21 @@ func _process(_delta: float) -> void:
 		return
 
 	if Input.is_action_just_pressed("attach_object"):
-		if self.attached_object == null:
-			rpc("attach_object", "pawn-" + str(self.player_id))
-		else:
-			rpc("detach_object", self.position)
-	return
+		self.toggle_attached_object()
 
-@rpc("any_peer", "call_remote", "reliable")
+func toggle_attached_object():
+	if self.attached_object == null:
+		rpc("attach_object", "pawn-" + str(self.player_id))
+	else:
+		rpc("detach_object", self.position)
+
+
+@rpc("any_peer", "call_local", "reliable")
 func attach_object(object_name: String):
 	self.attached_object = self.get_node("../../GameObjects/"+object_name)
 	return
 
-@rpc("any_peer", "call_remote", "reliable")
+@rpc("any_peer", "call_local", "reliable")
 func detach_object(object_position: Vector3):
 	self.attached_object.position = object_position
 	self.attached_object = null

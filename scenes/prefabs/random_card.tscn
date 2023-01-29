@@ -102,7 +102,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("BoxShape3D_b4fei")
 
 [node name="Control" type="Control" parent="."]
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -148,6 +147,6 @@ anchor_right = 1.0
 offset_left = -151.0
 offset_bottom = 91.0
 grow_horizontal = 0
-text = "Draw"
+text = "抽卡"
 
 [connection signal="button_up" from="Control/Draw" to="." method="_on_draw_button_up"]

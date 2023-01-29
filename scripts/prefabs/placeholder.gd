@@ -17,6 +17,7 @@ func _ready():
 	self.label_card_title = self.get_node("Control/Card/Title")
 	self.label_card_description = self.get_node("Control/Card/Description")
 	self.control = self.get_node("Control")
+	self.control.visible = false
 
 	self.area = self.get_node("Area3D")
 	if !self.multiplayer.is_server():
