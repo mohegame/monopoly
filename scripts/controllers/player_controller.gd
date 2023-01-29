@@ -14,50 +14,53 @@ var players: Node3D
 var game_objects: Node3D
 var player: Player
 var pawn: Node3D
-var label_score: Label
+var button_score: Button
 var control: Control
 var line_edit_player_name: LineEdit
 var label_description: Label
 var button_login: Button
 var container_login_pane: VBoxContainer
+var initialized: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	self.start_positions = self.get_node("../../StartPositions")
 	self.players = self.get_node("../../Players")
-	self.label_score = self.get_node("Control/Score")
+	self.button_score = self.get_node("Control/Score")
 	self.line_edit_player_name = self.get_node("Control/LoginPane/PlayerName")
 	self.label_description = self.get_node("Control/LoginPane/Description")
 	self.button_login = self.get_node("Control/LoginPane/Login")
 	self.container_login_pane = self.get_node("Control/LoginPane")
 	self.control = self.get_node("Control")
 	self.game_objects = self.get_node("../../GameObjects")
+	self.control.visible = false
 
 	if self.multiplayer.is_server():
 		var syncer: MultiplayerSynchronizer = self.get_node("MultiplayerSynchronizer")
 		syncer.set_visibility_for(self.owner_id, true)
-		self.control.visible = false
-	else:
-		self.control.visible = true
+
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if self.owner_id != self.multiplayer.get_unique_id():
 		return
 
+	self.control.visible = true
+	self.button_score.visible = initialized
+	self.container_login_pane.visible = !initialized
+
 	for id in self.player_states:
 		if id == self.owner_id:
-			self.label_score.text = "$" + str(self.player_states[id].score)
+			self.button_score.text = "$" + str(self.player_states[id].score)
 
 
 @rpc(authority, call_remote, reliable)
 func initialize_player(player_name: String, player_transform: Transform3D):
-	print(player_name, player_transform)
 	self.player = self.players.get_node(str(self.multiplayer.get_unique_id()))
 	self.player.transform = player_transform
-	self.player.player_name = player_name
+	self.player.set_player_name(player_name)
 	self.player.initialize()
-	self.container_login_pane.visible = false
+	self.initialized = true
 
 @rpc(authority, call_remote, reliable)
 func failed_to_add_player(message: String):

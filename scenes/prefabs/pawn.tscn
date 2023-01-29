@@ -1,25 +1,25 @@
 [gd_scene load_steps=4 format=3 uid="uid://b6thwbd2547ep"]
 
-[sub_resource type="SphereMesh" id="SphereMesh_pijut"]
+[sub_resource type="SphereMesh" id="SphereMesh_0um7d"]
 
-[sub_resource type="CylinderMesh" id="CylinderMesh_xlx4t"]
+[sub_resource type="CylinderMesh" id="CylinderMesh_sj24k"]
 top_radius = 0.25
 bottom_radius = 0.7
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_rpd6j"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_477bb"]
 
 [node name="Pawn" type="Node3D"]
 
 [node name="Head" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0.5, 0)
-mesh = SubResource("SphereMesh_pijut")
+mesh = SubResource("SphereMesh_0um7d")
 
 [node name="Pedestal" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0.2, 0)
-mesh = SubResource("CylinderMesh_xlx4t")
+mesh = SubResource("CylinderMesh_sj24k")
 
 [node name="Area3D" type="Area3D" parent="."]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 transform = Transform3D(0.4, 0, 0, 0, 0.6, 0, 0, 0, 0.4, 0, 0.3, 0)
-shape = SubResource("BoxShape3D_rpd6j")
+shape = SubResource("BoxShape3D_477bb")

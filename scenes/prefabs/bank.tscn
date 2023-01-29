@@ -1,0 +1,144 @@
+[gd_scene load_steps=10 format=3 uid="uid://uhib6cfbc2y5"]
+
+[ext_resource type="Script" path="res://scripts/prefabs/bank.gd" id="1_jebby"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ky37b"]
+albedo_color = Color(0.466667, 0.466667, 0.466667, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_kl7if"]
+material = SubResource("StandardMaterial3D_ky37b")
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_kkju0"]
+properties/0/path = NodePath("..:position")
+properties/0/spawn = true
+properties/0/sync = true
+properties/1/path = NodePath("..:rotation")
+properties/1/spawn = true
+properties/1/sync = true
+properties/2/path = NodePath("..:player_names")
+properties/2/spawn = true
+properties/2/sync = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_oyyl6"]
+
+[sub_resource type="Theme" id="Theme_fht36"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_mp0bl"]
+font_size = 30
+
+[sub_resource type="LabelSettings" id="LabelSettings_2665o"]
+font_size = 25
+
+[sub_resource type="Theme" id="Theme_u02b4"]
+
+[node name="Bank" type="Node3D"]
+script = ExtResource("1_jebby")
+
+[node name="TileBlock" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.1, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("BoxMesh_kl7if")
+
+[node name="Title" type="Label3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.3, -0.5)
+billboard = 1
+text = "Bank"
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+root_path = NodePath(".")
+replication_config = SubResource("SceneReplicationConfig_kkju0")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 2, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("BoxShape3D_oyyl6")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Panel" type="Panel" parent="Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -230.0
+offset_top = -137.0
+offset_right = 231.0
+offset_bottom = 92.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_fht36")
+
+[node name="Title" type="Label" parent="Control/Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -36.5
+offset_right = 36.5
+offset_bottom = 45.0
+grow_horizontal = 2
+text = "Bank"
+label_settings = SubResource("LabelSettings_mp0bl")
+
+[node name="Label" type="Label" parent="Control/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -165.0
+offset_top = -19.0
+offset_right = -67.0
+offset_bottom = 19.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Amount"
+label_settings = SubResource("LabelSettings_2665o")
+
+[node name="Amount" type="LineEdit" parent="Control/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.5
+offset_top = -30.5
+offset_right = 172.5
+offset_bottom = 34.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Gain" type="Button" parent="Control/Panel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -170.5
+offset_top = -69.0
+offset_right = -50.5
+offset_bottom = -14.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Gain"
+
+[node name="PayTo" type="MenuButton" parent="Control/Panel"]
+layout_mode = 0
+offset_left = 210.0
+offset_top = 160.0
+offset_right = 410.0
+offset_bottom = 215.0
+theme = SubResource("Theme_u02b4")
+text = "Pay To"

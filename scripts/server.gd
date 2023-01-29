@@ -32,6 +32,7 @@ func _ready() -> void:
 	var random_class = preload("res://scenes/prefabs/random.tscn")
 	var placeholder_class = preload("res://scenes/prefabs/placeholder.tscn")
 	var random_card_class = preload("res://scenes/prefabs/random_card.tscn")
+	var bank_class = preload("res://scenes/prefabs/bank.tscn")
 
 	var game_tile_data = GameTileData.new()
 	for item in game_tile_data.data:
@@ -90,6 +91,12 @@ func _ready() -> void:
 				object.position = Vector3(x, 0, z)
 				object.rotate_y(y_ratation)
 				self.game_objects.add_child(object, true)
+			GameTileData.DATA_KIND_BANK:
+				var object: Node3D = bank_class.instantiate()
+				object.position = Vector3(x, 0, z)
+				object.rotate_y(y_ratation)
+				object.player_states = self.game_state
+				self.game_objects.add_child(object, true)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -115,7 +122,7 @@ func add_player(id: int):
 	self.player_count += 1
 
 	var player_state = Dictionary()
-	player_state.name = "Player"
+	player_state.name = ""
 	player_state.id = id
 	player_state.score = 10000
 	self.game_state[id] = player_state

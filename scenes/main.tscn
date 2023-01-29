@@ -92,7 +92,7 @@ mesh = SubResource("BoxMesh_gm300")
 [node name="GameObjects" type="Node3D" parent="."]
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="GameObjects"]
-_spawnable_scenes = PackedStringArray("res://scenes/prefabs/pawn.tscn", "res://scenes/prefabs/random.tscn", "res://scenes/prefabs/tile.tscn", "res://scenes/prefabs/random_card.tscn", "res://scenes/prefabs/placeholder.tscn")
+_spawnable_scenes = PackedStringArray("res://scenes/prefabs/pawn.tscn", "res://scenes/prefabs/random.tscn", "res://scenes/prefabs/tile.tscn", "res://scenes/prefabs/random_card.tscn", "res://scenes/prefabs/placeholder.tscn", "res://scenes/prefabs/bank.tscn")
 spawn_path = NodePath("..")
 
 [node name="Players" type="Node3D" parent="."]

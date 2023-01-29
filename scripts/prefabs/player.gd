@@ -72,7 +72,7 @@ func _physics_process(delta: float) -> void:
 		self.state = "Idle2"
 	else:
 		self.state = "Run"
-	
+
 	if not direction.is_zero_approx():
 		var rad = acos(Vector2(0, -1).dot(Vector2(direction.x, direction.z)))
 		if direction.x > 0: 

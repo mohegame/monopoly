@@ -7,6 +7,7 @@ const DATA_KIND_COUNTRY = "Country"
 const DATA_KIND_DESTINY = "Destiny"
 const DATA_KIND_CHANCE = "Chance"
 const DATA_KIND_RANDOM = "Random"
+const DATA_KIND_BANK = "Bank"
 
 
 # Orientations
@@ -329,14 +330,28 @@ var data: Array = [
 		"purchase_price": [3000, 2000, 2000, 2000],
 		"toll_fee": [300, 1500, 3500, 5000],
 	},
-	
+
 	{
 		"kind": DATA_KIND_RANDOM,
 		"name": "骰子",
 		"position": Vector2(4, 4),
 		"orientation": ORIENTATION_SOUTH,
 		"description": "",
-	}
+	},
+	{
+		"kind": DATA_KIND_BANK,
+		"name": "银行",
+		"position": Vector2(5, 4),
+		"orientation": ORIENTATION_SOUTH,
+		"description": "交易",
+	},
+	{
+		"kind": DATA_KIND_BANK,
+		"name": "银行",
+		"position": Vector2(3, 4),
+		"orientation": ORIENTATION_NORTH,
+		"description": "交易",
+	},
 ]
 
 
