@@ -31,9 +31,9 @@ func _process(delta):
 
 func _player_entered(body: Node3D):
 	if self.multiplayer.get_unique_id() == body.get_multiplayer_authority():
-		rpc_id(1, "random_number")
+		rpc_id(1, "random_number", true)
 
-@rpc(any_peer, call_remote, reliable)
-func random_number():
+@rpc("any_peer", "call_remote", "reliable")
+func random_number(_unused: bool):
 	self.number = -1
 	self.random_duration = 0

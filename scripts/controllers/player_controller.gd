@@ -14,13 +14,14 @@ var players: Node3D
 var game_objects: Node3D
 var player: Player
 var pawn: Node3D
-var button_score: Button
+var button_score: MenuButton
 var control: Control
 var line_edit_player_name: LineEdit
 var label_description: Label
 var button_login: Button
 var container_login_pane: VBoxContainer
 var initialized: bool = false
+var menu_items: Array
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -41,7 +42,7 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	if self.owner_id != self.multiplayer.get_unique_id():
 		return
 
@@ -49,25 +50,48 @@ func _process(delta):
 	self.button_score.visible = initialized
 	self.container_login_pane.visible = !initialized
 
+	var player_array = []
 	for id in self.player_states:
+		var a_player_state = self.player_states[id]
+		player_array.push_back(a_player_state)
 		if id == self.owner_id:
 			self.button_score.text = "$" + str(self.player_states[id].score)
+	
+	player_array.sort_custom(
+		func(a, b): return a.score > b.score
+	)
+
+	var player_names = []
+	var player_names_dict = {}
+	for item in player_array:
+		var item_name = "$%-10d%s" % [item.score, item.name]
+		player_names.append(item_name)
+		player_names_dict[item_name] = true
+	
+	if !(player_names.size() == self.menu_items.size() && player_names_dict.has_all(self.menu_items)):
+		self.button_score.get_popup().clear()
+		self.menu_items.clear()
+		for player_name in player_names:
+			self.menu_items.append(player_name)
+			self.button_score.get_popup().add_item(player_name)
 
 
-@rpc(authority, call_remote, reliable)
+
+@rpc("authority", "call_remote", "reliable")
 func initialize_player(player_name: String, player_transform: Transform3D):
 	self.player = self.players.get_node(str(self.multiplayer.get_unique_id()))
 	self.player.transform = player_transform
-	self.player.set_player_name(player_name)
+	self.player.player_name = player_name
 	self.player.initialize()
 	self.initialized = true
 
-@rpc(authority, call_remote, reliable)
+@rpc("authority", "call_remote", "reliable")
 func failed_to_add_player(message: String):
 	self.label_description.text = message
 
-@rpc(any_peer, call_remote, reliable)
+@rpc("any_peer", "call_remote", "reliable")
 func add_player(player_name: String):
+	print("Add Player ", player_name)
 	for i in self.player_states:
 		var state = self.player_states[i]
 		if state.name == player_name:
@@ -99,8 +123,3 @@ func _on_login_button_up():
 	if self.line_edit_player_name.text == "":
 		return
 	rpc_id(1, "add_player", self.line_edit_player_name.text)
-
-
-
-func _on_score_button_up():
-	pass # Replace with function body.

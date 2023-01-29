@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/controllers/player_controller.gd" id="1_m0syc"]
 
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_vshls"]
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_05f03"]
 properties/0/path = NodePath("..:player_states")
 properties/0/spawn = true
 properties/0/sync = true
@@ -10,28 +10,28 @@ properties/1/path = NodePath("..:owner_id")
 properties/1/spawn = true
 properties/1/sync = true
 
-[sub_resource type="Theme" id="Theme_dgwo2"]
+[sub_resource type="Theme" id="Theme_qrwnh"]
 Button/font_sizes/font_size = 30
 
-[sub_resource type="Theme" id="Theme_s3bej"]
+[sub_resource type="Theme" id="Theme_evq0a"]
 LineEdit/font_sizes/font_size = 40
 
-[sub_resource type="Theme" id="Theme_1brk8"]
+[sub_resource type="Theme" id="Theme_2515j"]
 Button/font_sizes/font_size = 30
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_osk1e"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_34xrv"]
 bg_color = Color(0.129412, 0.14902, 0.180392, 1)
 
-[sub_resource type="Theme" id="Theme_apvpv"]
+[sub_resource type="Theme" id="Theme_pmu5t"]
 Label/font_sizes/font_size = 24
-Label/styles/normal = SubResource("StyleBoxFlat_osk1e")
+Label/styles/normal = SubResource("StyleBoxFlat_34xrv")
 
 [node name="PlayerController" type="Node3D"]
 script = ExtResource("1_m0syc")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 root_path = NodePath(".")
-replication_config = SubResource("SceneReplicationConfig_vshls")
+replication_config = SubResource("SceneReplicationConfig_05f03")
 public_visibility = false
 
 [node name="Control" type="Control" parent="."]
@@ -43,7 +43,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Score" type="Button" parent="Control"]
+[node name="Score" type="MenuButton" parent="Control"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -52,7 +52,7 @@ offset_left = -85.5
 offset_right = 85.5
 offset_bottom = 72.0
 grow_horizontal = 2
-theme = SubResource("Theme_dgwo2")
+theme = SubResource("Theme_qrwnh")
 text = "$10000"
 
 [node name="LoginPane" type="VBoxContainer" parent="Control"]
@@ -72,20 +72,19 @@ grow_vertical = 2
 [node name="PlayerName" type="LineEdit" parent="Control/LoginPane"]
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
-theme = SubResource("Theme_s3bej")
+theme = SubResource("Theme_evq0a")
 placeholder_text = "Player Name"
-max_length = 20
+max_length = 8
 
 [node name="Login" type="Button" parent="Control/LoginPane"]
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
-theme = SubResource("Theme_1brk8")
+theme = SubResource("Theme_2515j")
 text = "Login"
 
 [node name="Description" type="Label" parent="Control/LoginPane"]
 layout_mode = 2
-theme = SubResource("Theme_apvpv")
+theme = SubResource("Theme_pmu5t")
 autowrap_mode = 1
 
-[connection signal="button_up" from="Control/Score" to="." method="_on_score_button_up"]
 [connection signal="button_up" from="Control/LoginPane/Login" to="." method="_on_login_button_up"]

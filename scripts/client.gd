@@ -31,7 +31,7 @@ func _process(delta: float) -> void:
 	var uid = self.multiplayer.multiplayer_peer.get_unique_id()
 
 	if self.player == null:
-		self.player = self.get_node("../Players/" + str(uid))
+		self.player = self.get_node_or_null("../Players/" + str(uid))
 		if player == null:
 			return
 

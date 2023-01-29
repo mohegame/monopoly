@@ -24,7 +24,7 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	if self.multiplayer.is_server():
 		self.player_names.clear()
 		for id in self.player_states:
@@ -38,9 +38,12 @@ func _process(delta):
 		self.menu_button_pay_to.get_popup().add_item("Bank", 0)
 		self.menu_button_pay_to.get_popup().add_separator()
 		self.menu_items.clear()
-		for player_name in player_names:
+		for player_name in self.player_names:
+			var player_id = self.player_names[player_name]
+			if player_id == self.multiplayer.get_unique_id():
+				continue
 			self.menu_items.append(player_name)
-			self.menu_button_pay_to.get_popup().add_item(player_name, self.menu_items.size())
+			self.menu_button_pay_to.get_popup().add_item(player_name, player_id)
 
 
 
@@ -53,4 +56,28 @@ func _player_exited(body: Node3D):
 		self.control.visible = false
 
 func _pay_to(id: int):
-	print(">>>>>>>", id)
+	if id == self.multiplayer.get_unique_id():
+		return
+	var text: String = self.line_edit_amount.text
+	self.rpc_id(1, "trade", self.multiplayer.get_unique_id(), id, text.to_int())
+
+func _on_gain_button_up() -> void:
+	var text: String = self.line_edit_amount.text
+	self.rpc_id(1, "trade", 0, self.multiplayer.get_unique_id(), text.to_int())
+
+@rpc("any_peer", "call_remote", "reliable")
+func trade(player_a: int, player_b: int, amount: int):
+	print("Trade from {0} to {1}: {2}".format([player_a, player_b, amount]))
+	var state_of_player_a = self.player_states.get(player_a)
+	if player_a != 0 && state_of_player_a == null:
+		return
+
+	var state_of_player_b = self.player_states.get(player_b)
+	if player_b != 0 && state_of_player_b == null:
+		return
+	
+	if state_of_player_a != null:
+		state_of_player_a.score -= amount
+	
+	if state_of_player_b != null:
+		state_of_player_b.score += amount

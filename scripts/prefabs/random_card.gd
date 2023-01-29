@@ -85,10 +85,11 @@ func _player_exited(body: Node3D):
 func _on_draw_button_up():
 	self.button_draw.disabled = true
 	self.draw_silent_duration = 1
-	rpc_id(1, "draw")
+	rpc_id(1, "draw", true)
 
-@rpc(any_peer, call_remote, reliable)
-func draw():
+
+@rpc("any_peer", "call_remote", "reliable")
+func draw(_unused: bool):
 	self.random_duration = 0
 	self.card_name = ""
 	self.card_description = ""

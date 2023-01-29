@@ -47,19 +47,19 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	if self.multiplayer.is_server():
 		return
 
 	if self.area_name != "" && self.control.visible:
-		var name = self.area_name
+		var name_text = self.area_name
 		var description = ""
 		if mortgaged:
-			name += "[*]"
+			name_text += "[*]"
 			description += "[*]Mortgaged\n"
 
 		self.label_owner.text = self.owner_name
-		self.label_area.text = name
+		self.label_area.text = name_text
 		if self.control.visible:
 			description += "Owner: {0}\n".format([self.owner_name])
 			description += "Level: {0}\n".format([self.level])
@@ -70,7 +70,7 @@ func _process(delta):
 				self.button_mortgage.text = "Redeem"
 			else:
 				self.button_mortgage.text = "Mortgage"
-			self.label_title.text = name
+			self.label_title.text = name_text
 			self.label_description.text = description
 
 
@@ -105,13 +105,13 @@ func _on_mortgage_button_up():
 	else:
 		rpc_id(1, "mortgage", self.multiplayer.get_unique_id())
 
-@rpc(any_peer, call_remote, reliable)
+@rpc("any_peer", "call_remote", "reliable")
 func buy(peer_id: int):
 	var player = self.player_states[peer_id]
 	self.owner_name = player.name
 	print(peer_id, player)
 
-@rpc(any_peer, call_remote, reliable)
+@rpc("any_peer", "call_remote", "reliable")
 func upgrade(peer_id: int):
 	var player = self.player_states[peer_id]
 	if self.owner_name != player.name:
@@ -121,7 +121,7 @@ func upgrade(peer_id: int):
 	self.level_fee = self.purchase_prices[self.level]
 	self.toll_fee = self.toll_fees[self.level]
 
-@rpc(any_peer, call_remote, reliable)
+@rpc("any_peer", "call_remote", "reliable")
 func downgrade(peer_id: int):
 	var player = self.player_states[peer_id]
 	if self.owner_name != player.name:
@@ -131,14 +131,14 @@ func downgrade(peer_id: int):
 	self.level_fee = self.purchase_prices[self.level]
 	self.toll_fee = self.toll_fees[self.level]
 
-@rpc(any_peer, call_remote, reliable)
+@rpc("any_peer", "call_remote", "reliable")
 func mortgage(peer_id: int):
 	var player = self.player_states[peer_id]
 	if self.owner_name != player.name:
 		return
 	self.mortgaged = true
 
-@rpc(any_peer, call_remote, reliable)
+@rpc("any_peer", "call_remote", "reliable")
 func redeem(peer_id: int):
 	var player = self.player_states[peer_id]
 	if self.owner_name != player.name:

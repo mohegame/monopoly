@@ -11,6 +11,9 @@ var initialized: bool = false
 @export
 var state: String = ""
 
+@export
+var player_name: String = ""
+
 var forward_yaw_angle: float = 0
 var player_id: int
 var attached_object: Node3D
@@ -26,10 +29,6 @@ func _init():
 
 func initialize() -> void:
 	self.initialized = true
-	return
-
-func set_player_name(player_name: String):
-	self.label_player_name.text = player_name
 	return
 
 func _enter_tree() -> void:
@@ -94,6 +93,8 @@ func _process(_delta: float) -> void:
 
 	if self.animation_player.current_animation != self.state:
 		self.animation_player.current_animation = self.state
+	
+	self.label_player_name.text = self.player_name
 
 	if self.multiplayer.get_unique_id() != self.player_id:
 		return
@@ -105,12 +106,12 @@ func _process(_delta: float) -> void:
 			rpc("detach_object", self.position)
 	return
 
-@rpc(any_peer, call_local, reliable)
+@rpc("any_peer", "call_remote", "reliable")
 func attach_object(object_name: String):
 	self.attached_object = self.get_node("../../GameObjects/"+object_name)
 	return
 
-@rpc(any_peer, call_local, reliable)
+@rpc("any_peer", "call_remote", "reliable")
 func detach_object(object_position: Vector3):
 	self.attached_object.position = object_position
 	self.attached_object = null
