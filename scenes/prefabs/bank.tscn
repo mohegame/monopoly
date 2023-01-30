@@ -2,13 +2,13 @@
 
 [ext_resource type="Script" path="res://scripts/prefabs/bank.gd" id="1_jebby"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y4sw7"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mlq1o"]
 albedo_color = Color(0.466667, 0.466667, 0.466667, 1)
 
-[sub_resource type="BoxMesh" id="BoxMesh_s8wig"]
-material = SubResource("StandardMaterial3D_y4sw7")
+[sub_resource type="BoxMesh" id="BoxMesh_lnyxs"]
+material = SubResource("StandardMaterial3D_mlq1o")
 
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_eljgi"]
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_fm16h"]
 properties/0/path = NodePath("..:position")
 properties/0/spawn = true
 properties/0/sync = true
@@ -19,25 +19,25 @@ properties/2/path = NodePath("..:player_names")
 properties/2/spawn = true
 properties/2/sync = true
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_bphim"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_wg232"]
 size = Vector3(1, 2, 1)
 
-[sub_resource type="Theme" id="Theme_jqnbt"]
+[sub_resource type="Theme" id="Theme_mox0f"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_yu2ig"]
+[sub_resource type="LabelSettings" id="LabelSettings_nykr4"]
 font_size = 30
 
-[sub_resource type="LabelSettings" id="LabelSettings_5iyfb"]
+[sub_resource type="LabelSettings" id="LabelSettings_l26ll"]
 font_size = 25
 
-[sub_resource type="Theme" id="Theme_ucwe5"]
+[sub_resource type="Theme" id="Theme_uutpf"]
 
 [node name="Bank" type="Node3D"]
 script = ExtResource("1_jebby")
 
 [node name="TileBlock" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.1, 0, 0, 0, 1, 0, 0, 0)
-mesh = SubResource("BoxMesh_s8wig")
+mesh = SubResource("BoxMesh_lnyxs")
 
 [node name="Title" type="Label3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.3, -0.5)
@@ -46,13 +46,13 @@ text = "银行"
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 root_path = NodePath(".")
-replication_config = SubResource("SceneReplicationConfig_eljgi")
+replication_config = SubResource("SceneReplicationConfig_fm16h")
 
 [node name="Area3D" type="Area3D" parent="."]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-shape = SubResource("BoxShape3D_bphim")
+shape = SubResource("BoxShape3D_wg232")
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
@@ -76,7 +76,8 @@ offset_right = 231.0
 offset_bottom = 92.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = SubResource("Theme_jqnbt")
+focus_mode = 1
+theme = SubResource("Theme_mox0f")
 
 [node name="Title" type="Label" parent="Control/Panel"]
 layout_mode = 1
@@ -88,7 +89,7 @@ offset_right = 36.5
 offset_bottom = 45.0
 grow_horizontal = 2
 text = "银行"
-label_settings = SubResource("LabelSettings_yu2ig")
+label_settings = SubResource("LabelSettings_nykr4")
 
 [node name="Label" type="Label" parent="Control/Panel"]
 layout_mode = 1
@@ -104,7 +105,7 @@ offset_bottom = 19.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "金额"
-label_settings = SubResource("LabelSettings_5iyfb")
+label_settings = SubResource("LabelSettings_l26ll")
 
 [node name="Amount" type="LineEdit" parent="Control/Panel"]
 layout_mode = 1
@@ -144,7 +145,7 @@ offset_left = 210.0
 offset_top = 160.0
 offset_right = 410.0
 offset_bottom = 215.0
-theme = SubResource("Theme_ucwe5")
+theme = SubResource("Theme_uutpf")
 text = "支付给【银行/玩家】"
 
 [connection signal="button_up" from="Control/Panel/Gain" to="." method="_on_gain_button_up"]

@@ -60,6 +60,7 @@ func _pay_to(id: int):
 		return
 	var text: String = self.line_edit_amount.text
 	self.rpc_id(1, "trade", self.multiplayer.get_unique_id(), id, text.to_int())
+	self.line_edit_amount.text = ""
 
 func _on_gain_button_up() -> void:
 	var text: String = self.line_edit_amount.text

@@ -58,7 +58,10 @@ func _gui_input(event: InputEvent) -> void:
 
 	if self.touch_index >= 0:
 		if event is InputEventMouseMotion || event is InputEventScreenDrag:
-			self.target_position += event.relative
+			if event is InputEventScreenDrag:
+				self.target_position += event.relative * 0.5
+			else:
+				self.target_position += event.relative
 			var distance = (self.target_position - self.original_position).length()
 			if distance > self.movement_radius:
 				self.position = self.original_position + (self.target_position - self.original_position) * self.movement_radius / distance 
