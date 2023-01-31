@@ -110,7 +110,6 @@ func _on_mortgage_button_up():
 func buy(peer_id: int):
 	var player = self.player_states[peer_id]
 	self.owner_name = player.name
-	print(peer_id, player)
 
 @rpc("any_peer", "call_remote", "reliable")
 func upgrade(peer_id: int):

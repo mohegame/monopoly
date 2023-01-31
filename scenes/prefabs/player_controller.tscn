@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/controllers/player_controller.gd" id="1_m0syc"]
 
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_jyavp"]
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_kkua3"]
 properties/0/path = NodePath("..:player_states")
 properties/0/spawn = true
 properties/0/sync = true
@@ -10,28 +10,28 @@ properties/1/path = NodePath("..:owner_id")
 properties/1/spawn = true
 properties/1/sync = true
 
-[sub_resource type="Theme" id="Theme_grprb"]
+[sub_resource type="Theme" id="Theme_56kve"]
 Button/font_sizes/font_size = 30
 
-[sub_resource type="Theme" id="Theme_8m4rx"]
+[sub_resource type="Theme" id="Theme_uet4y"]
 LineEdit/font_sizes/font_size = 40
 
-[sub_resource type="Theme" id="Theme_f877t"]
+[sub_resource type="Theme" id="Theme_qunsb"]
 Button/font_sizes/font_size = 30
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yny55"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qbi34"]
 bg_color = Color(0.129412, 0.14902, 0.180392, 1)
 
-[sub_resource type="Theme" id="Theme_nxijc"]
+[sub_resource type="Theme" id="Theme_ajn0w"]
 Label/font_sizes/font_size = 24
-Label/styles/normal = SubResource("StyleBoxFlat_yny55")
+Label/styles/normal = SubResource("StyleBoxFlat_qbi34")
 
 [node name="PlayerController" type="Node3D"]
 script = ExtResource("1_m0syc")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 root_path = NodePath(".")
-replication_config = SubResource("SceneReplicationConfig_jyavp")
+replication_config = SubResource("SceneReplicationConfig_kkua3")
 public_visibility = false
 
 [node name="Control" type="Control" parent="."]
@@ -52,7 +52,7 @@ offset_left = -85.5
 offset_right = 85.5
 offset_bottom = 72.0
 grow_horizontal = 2
-theme = SubResource("Theme_grprb")
+theme = SubResource("Theme_56kve")
 text = "$10000"
 
 [node name="LoginPane" type="VBoxContainer" parent="Control"]
@@ -73,19 +73,19 @@ grow_vertical = 2
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 focus_mode = 1
-theme = SubResource("Theme_8m4rx")
+theme = SubResource("Theme_uet4y")
 placeholder_text = "玩家名称"
 max_length = 8
 
 [node name="Login" type="Button" parent="Control/LoginPane"]
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
-theme = SubResource("Theme_f877t")
+theme = SubResource("Theme_qunsb")
 text = "登陆"
 
 [node name="Description" type="Label" parent="Control/LoginPane"]
 layout_mode = 2
-theme = SubResource("Theme_nxijc")
+theme = SubResource("Theme_ajn0w")
 autowrap_mode = 1
 
 [node name="Lift" type="Button" parent="Control"]

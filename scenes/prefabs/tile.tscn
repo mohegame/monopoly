@@ -2,22 +2,22 @@
 
 [ext_resource type="Script" path="res://scripts/prefabs/tile.gd" id="1_j6n10"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nuvv5"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tq7rk"]
 albedo_color = Color(0.466667, 0.466667, 0.466667, 1)
 
-[sub_resource type="BoxMesh" id="BoxMesh_ef74o"]
-material = SubResource("StandardMaterial3D_nuvv5")
+[sub_resource type="BoxMesh" id="BoxMesh_q00hn"]
+material = SubResource("StandardMaterial3D_tq7rk")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nvlry"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6bo0k"]
 albedo_color = Color(0.466667, 0.466667, 0.466667, 1)
 
-[sub_resource type="BoxMesh" id="BoxMesh_088rr"]
-material = SubResource("StandardMaterial3D_nvlry")
+[sub_resource type="BoxMesh" id="BoxMesh_gh4gi"]
+material = SubResource("StandardMaterial3D_6bo0k")
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_uhjp8"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_lenhx"]
 size = Vector3(1, 2, 1)
 
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_roo4i"]
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_rmk87"]
 properties/0/path = NodePath("..:position")
 properties/0/spawn = true
 properties/0/sync = true
@@ -46,18 +46,18 @@ properties/8/path = NodePath("..:toll_fee")
 properties/8/spawn = true
 properties/8/sync = true
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5bvsb"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hisqt"]
 bg_color = Color(0.129412, 0.14902, 0.180392, 1)
 corner_radius_top_left = 5
 corner_radius_top_right = 5
 
-[sub_resource type="Theme" id="Theme_j5vqa"]
-Label/styles/normal = SubResource("StyleBoxFlat_5bvsb")
+[sub_resource type="Theme" id="Theme_elcee"]
+Label/styles/normal = SubResource("StyleBoxFlat_hisqt")
 
-[sub_resource type="LabelSettings" id="LabelSettings_noehi"]
+[sub_resource type="LabelSettings" id="LabelSettings_20and"]
 font_size = 40
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y3dq4"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qu1h4"]
 content_margin_left = 10.0
 content_margin_top = 10.0
 content_margin_right = 10.0
@@ -66,10 +66,10 @@ bg_color = Color(0.188235, 0.215686, 0.262745, 1)
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
-[sub_resource type="Theme" id="Theme_3mudm"]
-Label/styles/normal = SubResource("StyleBoxFlat_y3dq4")
+[sub_resource type="Theme" id="Theme_b8ajn"]
+Label/styles/normal = SubResource("StyleBoxFlat_qu1h4")
 
-[sub_resource type="LabelSettings" id="LabelSettings_7l2sn"]
+[sub_resource type="LabelSettings" id="LabelSettings_q8pj7"]
 font_size = 30
 
 [node name="GameTile" type="Node3D"]
@@ -77,7 +77,7 @@ script = ExtResource("1_j6n10")
 
 [node name="TileBlock" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.1, 0, 0, 0, 1, 0, 0, 0)
-mesh = SubResource("BoxMesh_ef74o")
+mesh = SubResource("BoxMesh_q00hn")
 
 [node name="Owner" type="Label3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.5, -0.5)
@@ -93,27 +93,27 @@ text = "Area Name"
 
 [node name="Level1" type="MeshInstance3D" parent="Level"]
 transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0.3, 0.3)
-mesh = SubResource("BoxMesh_088rr")
+mesh = SubResource("BoxMesh_gh4gi")
 
 [node name="Level2" type="MeshInstance3D" parent="Level"]
 transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0.7, 0.3)
-mesh = SubResource("BoxMesh_088rr")
+mesh = SubResource("BoxMesh_gh4gi")
 skeleton = NodePath("../Level1")
 
 [node name="Level3" type="MeshInstance3D" parent="Level"]
 transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 1.1, 0.3)
-mesh = SubResource("BoxMesh_088rr")
+mesh = SubResource("BoxMesh_gh4gi")
 skeleton = NodePath("../Level1")
 
 [node name="Area3D" type="Area3D" parent="."]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-shape = SubResource("BoxShape3D_uhjp8")
+shape = SubResource("BoxShape3D_lenhx")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 root_path = NodePath(".")
-replication_config = SubResource("SceneReplicationConfig_roo4i")
+replication_config = SubResource("SceneReplicationConfig_rmk87")
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
@@ -141,17 +141,17 @@ grow_vertical = 2
 [node name="Title" type="Label" parent="Control/Card"]
 layout_mode = 2
 size_flags_vertical = 0
-theme = SubResource("Theme_j5vqa")
+theme = SubResource("Theme_elcee")
 text = "Title"
-label_settings = SubResource("LabelSettings_noehi")
+label_settings = SubResource("LabelSettings_20and")
 horizontal_alignment = 1
 
 [node name="Description" type="Label" parent="Control/Card"]
 layout_mode = 2
 size_flags_vertical = 1
-theme = SubResource("Theme_3mudm")
+theme = SubResource("Theme_b8ajn")
 text = "Content"
-label_settings = SubResource("LabelSettings_7l2sn")
+label_settings = SubResource("LabelSettings_q8pj7")
 
 [node name="Upgrade" type="Button" parent="Control"]
 layout_mode = 1

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://lw6klon16rpj"]
+[gd_scene load_steps=12 format=3 uid="uid://lw6klon16rpj"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_2abh6"]
 [ext_resource type="Script" path="res://scripts/ui/joystick.gd" id="2_jjqbt"]
@@ -25,8 +25,12 @@ albedo_color = Color(0.737255, 0.94902, 0.972549, 1)
 material = SubResource("StandardMaterial3D_8b6e2")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_dqgo4"]
+size = Vector3(40, 3, 0.5)
 
 [sub_resource type="BoxMesh" id="BoxMesh_gm300"]
+size = Vector3(40, 3, 0.5)
+
+[sub_resource type="AudioStreamMicrophone" id="AudioStreamMicrophone_uotvj"]
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_2abh6")
@@ -54,7 +58,7 @@ mesh = SubResource("PlaneMesh_otcuc")
 skeleton = NodePath("../CollisionShape3D")
 
 [node name="Wall1" type="StaticBody3D" parent="Environment"]
-transform = Transform3D(40, 0, 0, 0, 3, 0, 0, 0, 0.5, 0, 1.5, 20)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 20)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Wall1"]
 shape = SubResource("BoxShape3D_dqgo4")
@@ -63,7 +67,7 @@ shape = SubResource("BoxShape3D_dqgo4")
 mesh = SubResource("BoxMesh_gm300")
 
 [node name="Wall2" type="StaticBody3D" parent="Environment"]
-transform = Transform3D(40, 0, 0, 0, 3, 0, 0, 0, 0.5, 0, 1.5, -20)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -20)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Wall2"]
 shape = SubResource("BoxShape3D_dqgo4")
@@ -72,7 +76,7 @@ shape = SubResource("BoxShape3D_dqgo4")
 mesh = SubResource("BoxMesh_gm300")
 
 [node name="Wall3" type="StaticBody3D" parent="Environment"]
-transform = Transform3D(-1.74846e-06, 0, 0.5, 0, 3, 0, -40, 0, -2.18557e-08, 20, 1.5, 0)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 20, 1.5, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Wall3"]
 shape = SubResource("BoxShape3D_dqgo4")
@@ -81,7 +85,7 @@ shape = SubResource("BoxShape3D_dqgo4")
 mesh = SubResource("BoxMesh_gm300")
 
 [node name="Wall4" type="StaticBody3D" parent="Environment"]
-transform = Transform3D(-1.74846e-06, 0, 0.5, 0, 3, 0, -40, 0, -2.18557e-08, -20, 1.5, 0)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -20, 1.5, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Wall4"]
 shape = SubResource("BoxShape3D_dqgo4")
@@ -164,3 +168,20 @@ input_action_left = "look_right"
 input_action_right = "look_left"
 input_action_forward = "look_down"
 input_action_backward = "look_up"
+
+[node name="Voice" type="Button" parent="Control"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -144.0
+offset_top = -64.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "语音（已关闭）"
+
+[node name="VoiceCapture" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamMicrophone_uotvj")
+bus = &"Record"

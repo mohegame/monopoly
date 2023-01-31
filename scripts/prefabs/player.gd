@@ -19,6 +19,22 @@ var player_id: int
 var attached_object: Node3D
 var animation_player: AnimationPlayer
 var label_player_name: Label3D
+var voice_player: AudioStreamPlayer
+var voice_player_playback: AudioStreamGeneratorPlayback
+var effect_capture: AudioEffectCapture
+var voice_capture: AudioStreamPlayer:
+	set(value):
+		var bus_index = AudioServer.get_bus_index("Record")
+		self.effect_capture = AudioServer.get_bus_effect(bus_index, 0)
+		voice_capture = value
+
+var voice_enabled: bool = false:
+	set(value):
+		voice_enabled = value
+		if voice_enabled == true:
+			self.voice_capture.play()
+		else:
+			self.voice_capture.stop()
 
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
@@ -37,6 +53,11 @@ func _enter_tree() -> void:
 	self.set_multiplayer_authority(self.player_id)
 	self.state = "Idle2"
 	self.label_player_name = self.get_node("PlayerName")
+
+func _ready() -> void:
+	self.voice_player = self.get_node("VoicePlayer")
+	self.voice_player.play()
+	self.voice_player_playback = self.voice_player.get_stream_playback()
 
 func _physics_process(delta: float) -> void:
 	if !self.initialized:
@@ -88,7 +109,13 @@ func _process(_delta: float) -> void:
 
 	if !self.visible:
 		self.visible = true
-
+	
+	if self.voice_enabled:
+		if self.effect_capture.can_get_buffer(1):
+			var data  = self.effect_capture.get_buffer(self.effect_capture.get_frames_available())
+			self.rpc("send_voice", data)
+		
+	
 	if self.attached_object != null:
 		self.attached_object.position = self.position + Vector3(0,1.7,0)
 
@@ -120,3 +147,13 @@ func detach_object(object_position: Vector3):
 	self.attached_object.position = object_position
 	self.attached_object = null
 	return
+
+
+@rpc("authority", "call_remote", "unreliable")
+func send_voice(data: PackedVector2Array):
+	if self.multiplayer.is_server():
+		return
+	if !self.voice_player.playing:
+		self.voice_player.play()
+		self.voice_player_playback = self.voice_player.get_stream_playback()
+	self.voice_player_playback.push_buffer(data)

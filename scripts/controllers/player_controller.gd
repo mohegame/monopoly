@@ -108,6 +108,8 @@ func add_player(player_name: String):
 
 	self.pawn = preload("res://scenes/prefabs/pawn.tscn").instantiate()
 	self.pawn.name = "pawn-" + str(self.owner_id)
+	var color_int: int = self.player_index * 173681
+	self.pawn.color = Color8(color_int >> 16 & 0xff, color_int >> 8 & 0xff, color_int & 0xff, 255)
 	self.game_objects.add_child(pawn)
 
 	self.player_state.name = player_name

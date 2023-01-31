@@ -1,13 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://cj1kjbgv4bjsi"]
+[gd_scene load_steps=6 format=3 uid="uid://cj1kjbgv4bjsi"]
 
 [ext_resource type="Script" path="res://scripts/prefabs/player.gd" id="1_0ipyv"]
 [ext_resource type="PackedScene" uid="uid://dm6o55jfrmxfv" path="res://assets/character.glb" id="2_w4u4e"]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7of4w"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qlbuv"]
 margin = 0.001
 radius = 0.4
 
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_ds4s4"]
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_x0oj1"]
 properties/0/path = NodePath("..:position")
 properties/0/spawn = true
 properties/0/sync = true
@@ -24,12 +24,14 @@ properties/4/path = NodePath("..:player_name")
 properties/4/spawn = true
 properties/4/sync = true
 
+[sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_usxhk"]
+
 [node name="Player" type="CharacterBody3D"]
 script = ExtResource("1_0ipyv")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-shape = SubResource("CapsuleShape3D_7of4w")
+shape = SubResource("CapsuleShape3D_qlbuv")
 
 [node name="PlayerName" type="Label3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
@@ -41,4 +43,7 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 root_path = NodePath(".")
-replication_config = SubResource("SceneReplicationConfig_ds4s4")
+replication_config = SubResource("SceneReplicationConfig_x0oj1")
+
+[node name="VoicePlayer" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamGenerator_usxhk")

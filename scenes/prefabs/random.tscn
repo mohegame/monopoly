@@ -2,12 +2,12 @@
 
 [ext_resource type="Script" path="res://scripts/prefabs/random.gd" id="1_igodn"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_0otc5"]
+[sub_resource type="BoxMesh" id="BoxMesh_tsr06"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_1b6mx"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_8oj6m"]
 size = Vector3(1, 2, 1)
 
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_af032"]
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_vfvgl"]
 properties/0/path = NodePath("..:position")
 properties/0/spawn = true
 properties/0/sync = true
@@ -23,13 +23,13 @@ script = ExtResource("1_igodn")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.1, 0, 0, 0, 1, 0, 0, 0)
-mesh = SubResource("BoxMesh_0otc5")
+mesh = SubResource("BoxMesh_tsr06")
 
 [node name="Area3D" type="Area3D" parent="."]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-shape = SubResource("BoxShape3D_1b6mx")
+shape = SubResource("BoxShape3D_8oj6m")
 
 [node name="Number" type="Label3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -39,4 +39,4 @@ font_size = 200
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 root_path = NodePath(".")
-replication_config = SubResource("SceneReplicationConfig_af032")
+replication_config = SubResource("SceneReplicationConfig_vfvgl")

@@ -7,6 +7,7 @@ var camera_original_position: Vector3 = Vector3(0, 2, 3.5)
 var camera_current_position: Vector3 = self.camera_original_position
 var connected = false
 var player: Player
+var button_voice: Button
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -18,7 +19,8 @@ func _ready() -> void:
 	self.multiplayer.connection_failed.connect(self.failed_to_connect_to_server)
 	self.multiplayer.multiplayer_peer = peer
 	self.get_node("../Players/MultiplayerSpawner").spawned.connect(_spawned_player)
-
+	button_voice = self.get_node("../Control/Voice")
+	button_voice.button_up.connect(_voice_toogle)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -34,6 +36,10 @@ func _process(delta: float) -> void:
 		self.player = self.get_node_or_null("../Players/" + str(uid))
 		if player == null:
 			return
+		
+		var voice_capture = self.get_node("../VoiceCapture")
+		self.player.voice_capture = voice_capture
+
 
 	var input_dir := Input.get_vector("look_left", "look_right", "look_up", "look_down")
 	if input_dir.length() > 0:
@@ -67,5 +73,15 @@ func failed_to_connect_to_server():
 	print("Failed to connect to server")
 
 func _spawned_player(node: Node3D):
-	print("spawned node: ", node.name)
+	print("Spawned node: ", node.name)
 	return
+
+func _voice_toogle():
+	if self.player == null:
+		return
+
+	self.player.voice_enabled = !self.player.voice_enabled
+	if self.player.voice_enabled:
+		self.button_voice.text = "语音（已开启）"
+	else:
+		self.button_voice.text = "语音（已关闭）"
